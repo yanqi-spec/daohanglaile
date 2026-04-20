@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes, maximum-scale=1.0">
-    <title>小七导航 · 手机完美版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>小七导航 · 云端同步 | 跨设备下班时间 + 全部分类</title>
     <style>
         * {
             margin: 0;
@@ -13,346 +13,584 @@
         }
 
         body {
-            background: #f5f7fb;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            padding: 12px;
+            background: linear-gradient(145deg, #eef2f9 0%, #e0e8f2 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 32px 40px;
             min-height: 100vh;
         }
 
-        /* 主容器 - 手机单列 */
         .app {
-            max-width: 500px;
+            max-width: 1600px;
             margin: 0 auto;
             width: 100%;
         }
 
-        /* 卡片通用样式 */
-        .card {
-            background: white;
-            border-radius: 24px;
-            padding: 16px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            border: 1px solid #eef2f6;
+        /* 玻璃卡片 */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 32px;
+            padding: 24px 28px;
+            margin-bottom: 28px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.2s ease;
         }
 
-        /* 顶部区域 */
-        .header {
-            background: white;
-            border-radius: 24px;
-            padding: 16px;
-            margin-bottom: 12px;
-            text-align: center;
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eef2f8;
+            padding-bottom: 14px;
         }
-        .logo {
-            font-size: 22px;
+
+        .section-title {
+            font-size: 1.6rem;
             font-weight: 700;
             background: linear-gradient(135deg, #1f5e6e, #2c8d9e);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            margin-bottom: 12px;
         }
-        
-        /* 搜索条 */
+
+        /* 顶部区域 */
+        .hero-area {
+            background: white;
+            border-radius: 36px;
+            padding: 24px 32px;
+            margin-bottom: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(145deg, #1a5c6b, #329cab);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
         .search-box {
             display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 12px;
+            min-width: 320px;
+            flex: 1;
+            max-width: 480px;
         }
+
         .search-box input {
             flex: 1;
-            padding: 12px 16px;
-            border: 1px solid #e2e8f0;
-            border-radius: 30px;
-            font-size: 15px;
+            padding: 12px 20px;
+            border: 1.5px solid #e2edf2;
+            border-radius: 48px;
+            font-size: 0.95rem;
+            background: #f9fcff;
             outline: none;
-            background: #f8fafc;
+            transition: all 0.2s;
         }
+
+        .search-box input:focus {
+            border-color: #2c8d9e;
+            box-shadow: 0 0 0 3px rgba(44, 141, 158, 0.2);
+        }
+
         .search-box button {
             background: #2c8d9e;
             border: none;
             color: white;
-            padding: 0 18px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 500;
+            padding: 0 28px;
+            border-radius: 48px;
+            font-weight: 600;
             cursor: pointer;
+            transition: 0.2s;
         }
-        
-        /* 用户状态栏 */
+
+        .search-box button:hover {
+            background: #1e6f7e;
+            transform: scale(0.97);
+        }
+
         .user-bar {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 20px;
             background: #f1f5f9;
-            padding: 10px 16px;
-            border-radius: 40px;
+            padding: 8px 24px;
+            border-radius: 60px;
         }
+
         .user-name {
-            font-size: 14px;
-            font-weight: 500;
-            color: #1e293b;
+            font-weight: 600;
+            color: #1e2f3a;
         }
-        .login-btn {
+
+        .login-btn, .logout-btn {
             background: #2c8d9e;
             border: none;
             color: white;
-            padding: 6px 20px;
-            border-radius: 30px;
-            font-size: 13px;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-weight: 600;
             cursor: pointer;
-        }
-        .logout-btn {
-            background: #e2e8f0;
-            border: none;
-            color: #475569;
-            padding: 6px 20px;
-            border-radius: 30px;
-            font-size: 13px;
-            cursor: pointer;
+            transition: 0.2s;
         }
 
-        /* 下班倒计时 */
+        .logout-btn {
+            background: #cbd5e1;
+            color: #1e293b;
+        }
+
+        /* 倒计时 */
         .countdown-row {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 20px;
         }
-        .countdown-label {
-            background: #eef2fa;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        #offworkDisplay {
-            font-size: 16px;
-            font-weight: 600;
-            color: #2c6e7e;
-        }
-        .time-select {
+
+        .countdown-panel {
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: #f1f5f9;
-            padding: 4px 12px;
-            border-radius: 30px;
+            gap: 24px;
+            background: #f2f6fc;
+            padding: 12px 28px;
+            border-radius: 60px;
         }
+
+        .countdown-label {
+            font-weight: 700;
+            background: #2c8d9e20;
+            padding: 6px 18px;
+            border-radius: 40px;
+            color: #1e5f6e;
+        }
+
+        #offworkDisplay {
+            font-size: 1.8rem;
+            font-weight: 800;
+            font-family: monospace;
+            letter-spacing: 2px;
+            background: linear-gradient(145deg, #1f5e6e, #227a8a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .time-select {
+            display: flex;
+            gap: 12px;
+            background: white;
+            padding: 6px 20px;
+            border-radius: 48px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
         .time-select input {
             border: none;
+            font-size: 1rem;
+            font-weight: 500;
             background: transparent;
-            font-size: 14px;
-            width: 70px;
             outline: none;
         }
 
-        /* 区块标题 */
-        .section-title {
-            font-size: 17px;
-            font-weight: 600;
-            margin-bottom: 14px;
-            padding-left: 8px;
-            border-left: 4px solid #2c8d9e;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .add-btn {
+        .small-btn {
             background: #eef2fa;
             border: none;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 12px;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 500;
             cursor: pointer;
+            transition: 0.2s;
         }
 
-        /* 链接列表 - 大触摸区域 */
-        .link-item {
+        .small-btn:hover {
+            background: #e2e8f0;
+        }
+
+        /* 链接网格 */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .link-card {
+            background: #ffffffdd;
+            backdrop-filter: blur(4px);
+            border-radius: 28px;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px;
-            background: #fafcff;
-            border-radius: 16px;
-            margin-bottom: 8px;
-            border: 1px solid #edf2f7;
-            transition: 0.1s;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid #eef2f8;
         }
+
+        .link-card:hover {
+            transform: translateY(-3px);
+            background: white;
+            border-color: #cbdde6;
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.12);
+        }
+
         .link-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
             flex: 1;
             cursor: pointer;
         }
+
         .link-icon {
-            font-size: 24px;
-            width: 36px;
+            font-size: 2rem;
+            width: 52px;
             text-align: center;
         }
+
         .link-info {
             flex: 1;
         }
+
         .link-name {
-            font-size: 15px;
-            font-weight: 500;
-            color: #1e293b;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1e2f3c;
         }
+
+        .link-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
         .click-badge {
-            font-size: 11px;
-            background: #eef2fa;
-            padding: 3px 10px;
-            border-radius: 20px;
-            color: #4a627a;
-            margin-top: 4px;
+            font-size: 0.7rem;
+            background: #e9f0f5;
+            padding: 4px 12px;
+            border-radius: 30px;
+            color: #2c6e7e;
             display: inline-block;
         }
+
+        .category-badge {
+            font-size: 0.7rem;
+            background: #2c8d9e20;
+            padding: 4px 12px;
+            border-radius: 30px;
+            color: #1e5f6e;
+            display: inline-block;
+        }
+
         .link-actions {
             display: flex;
             gap: 12px;
         }
+
         .icon-btn {
             background: transparent;
             border: none;
-            font-size: 18px;
+            font-size: 1.3rem;
             cursor: pointer;
-            padding: 6px;
-            color: #94a3b8;
-        }
-        .icon-btn:active {
-            opacity: 0.6;
+            padding: 8px;
+            border-radius: 40px;
+            transition: 0.1s;
+            color: #7f8c9a;
         }
 
-        /* 添加链接区域 */
+        .icon-btn:hover {
+            background: #eef3fc;
+            color: #2c8d9e;
+        }
+
+        /* 分类栏 */
+        .category-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f8fbfe;
+            padding: 12px 18px;
+            border-radius: 60px;
+        }
+
+        .cat-tag {
+            background: white;
+            border: 1px solid #dce5ec;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cat-tag.active {
+            background: #2c8d9e;
+            color: white;
+            border-color: #2c8d9e;
+            box-shadow: 0 4px 8px rgba(44, 141, 158, 0.2);
+        }
+
+        .cat-tag:hover:not(.active) {
+            background: #e2edf3;
+            border-color: #aec9d6;
+        }
+
+        .add-cat-btn {
+            background: #eef2fa;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
         .add-link-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 12px;
+            margin-top: 20px;
+            align-items: center;
         }
-        .add-link-row input {
+
+        .add-link-row input, .add-link-row select {
             flex: 1;
-            padding: 12px 14px;
-            border: 1px solid #e2e8f0;
-            border-radius: 30px;
-            font-size: 14px;
-            background: #f8fafc;
+            padding: 12px 18px;
+            border: 1px solid #dce5ec;
+            border-radius: 48px;
+            background: #fdfdfd;
+            font-size: 0.9rem;
+            outline: none;
         }
-        .small-btn {
-            background: #eef2fa;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 30px;
-            font-size: 13px;
-            cursor: pointer;
+
+        .add-link-row input:focus, .add-link-row select:focus {
+            border-color: #2c8d9e;
         }
+
         .primary-btn {
             background: #2c8d9e;
             color: white;
         }
 
-        /* 自开发按钮组 */
+        .primary-btn:hover {
+            background: #1e6f7e;
+        }
+
         .tools-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-        }
-        .tool-btn {
-            background: #f1f5f9;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 40px;
-            font-size: 14px;
-            cursor: pointer;
-            flex: 1 0 auto;
-            min-width: 70px;
-            text-align: center;
-        }
-        .tool-btn:active {
-            background: #e2e8f0;
+            gap: 14px;
         }
 
-        /* 弹窗 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        .modal-box {
-            background: white;
-            width: 85%;
-            max-width: 340px;
-            border-radius: 32px;
-            padding: 24px 20px;
-            text-align: center;
-        }
-        .modal-box h3 {
-            font-size: 20px;
-            margin-bottom: 8px;
-        }
-        .modal-box input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #e2e8f0;
-            border-radius: 30px;
-            font-size: 15px;
-            margin: 12px 0;
-            outline: none;
-        }
-        .modal-buttons {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 16px;
-        }
-        .modal-btn {
-            padding: 10px 24px;
-            border-radius: 30px;
+        .tool-btn {
+            background: #f1f6fc;
             border: none;
-            font-size: 14px;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
             cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
-        .modal-btn-confirm {
-            background: #2c8d9e;
-            color: white;
+
+        .tool-btn:hover {
+            background: #e2ecf5;
+            transform: translateY(-2px);
         }
-        .modal-btn-cancel {
-            background: #eef2fa;
-            color: #475569;
-        }
-        .close-x {
-            float: right;
-            font-size: 24px;
-            cursor: pointer;
-            color: #94a3b8;
-        }
-        .error-msg {
-            color: #e74c3c;
-            font-size: 12px;
-            margin-top: 8px;
-        }
+
         .footer {
             text-align: center;
-            font-size: 11px;
+            font-size: 0.75rem;
+            color: #6f8e9f;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .info-tip {
+            background: #eef3fa;
+            border-radius: 24px;
+            padding: 10px 16px;
+            font-size: 0.75rem;
+            color: #2c6e7e;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        /* 弹窗样式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-container {
+            background: linear-gradient(135deg, #ffffff 0%, #fefefe 100%);
+            width: 500px;
+            max-width: 90%;
+            border-radius: 48px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25);
+            transform: scale(0.96) translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.25s ease;
+            opacity: 0;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .modal-header {
+            padding: 24px 28px 8px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eff3f8;
+        }
+
+        .modal-header h3 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1f5e6e, #2c8d9e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .modal-close {
+            font-size: 32px;
+            cursor: pointer;
             color: #94a3b8;
-            margin-top: 16px;
-            padding: 12px;
+            transition: 0.2s;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: #2c8d9e;
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 20px 28px 28px 28px;
+        }
+
+        .modal-body input, .modal-body select {
+            width: 100%;
+            padding: 14px 18px;
+            margin: 10px 0;
+            border: 1.5px solid #e2edf2;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            background: #fafdff;
+            outline: none;
+        }
+
+        .modal-body input:focus, .modal-body select:focus {
+            border-color: #2c8d9e;
+            box-shadow: 0 0 0 3px rgba(44, 141, 158, 0.15);
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modal-btn-primary {
+            background: #2c8d9e;
+            color: white;
+            width: 100%;
+        }
+
+        .modal-btn-primary:hover {
+            background: #1e6f7e;
+            transform: translateY(-1px);
+        }
+
+        .error-msg {
+            color: #e74c3c;
+            font-size: 0.75rem;
+            margin-top: 6px;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: #f8fafc;
+            border-radius: 32px;
+            margin-bottom: 8px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e2f3c;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 48px;
+            font-size: 0.9rem;
+            z-index: 2100;
+            animation: fadeInOut 2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            85% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+
+        @media (max-width: 780px) {
+            body { padding: 20px 16px; }
+            .hero-area { flex-direction: column; align-items: stretch; }
+            .links-grid { grid-template-columns: 1fr; }
+            #offworkDisplay { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
 <div class="app">
-    <!-- 头部 -->
-    <div class="header">
+    <div class="hero-area">
         <div class="logo">🍃 小七导航 · 云端同步</div>
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="🔍 搜索链接名称...">
@@ -364,44 +602,52 @@
         </div>
     </div>
 
-    <!-- 下班倒计时卡片 -->
-    <div class="card">
+    <!-- 下班倒计时卡片（云端同步） -->
+    <div class="glass-card">
         <div class="countdown-row">
-            <span class="countdown-label">⏰ 下班倒计时</span>
-            <span id="offworkDisplay">--:--:--</span>
+            <div class="countdown-panel">
+                <span class="countdown-label">⏰ 下班倒计时</span>
+                <span id="offworkDisplay">--:--:--</span>
+            </div>
             <div class="time-select">
                 <input type="time" id="offworkTime" value="18:00">
-                <button id="setTimeBtn" class="small-btn">设定</button>
+                <button id="setTimeBtn" class="small-btn">云端保存</button>
             </div>
         </div>
+        <div class="info-tip">💡 下班时间云端保存，换设备登录自动同步</div>
     </div>
 
     <!-- 常用办公套件 -->
-    <div class="card">
-        <div class="section-title">
-            <span>📌 常用办公套件</span>
+    <div class="glass-card">
+        <div class="card-header">
+            <div class="section-title">📌 常用办公套件</div>
         </div>
-        <div id="defaultLinksContainer"></div>
+        <div id="defaultLinksContainer" class="links-grid"></div>
     </div>
 
-    <!-- 我的自定义导航 -->
-    <div class="card">
-        <div class="section-title">
-            <span>⭐ 我的自定义导航</span>
-            <button id="addCustomBtn" class="add-btn">➕ 添加</button>
+    <!-- 自定义导航 -->
+    <div class="glass-card">
+        <div class="card-header">
+            <div class="section-title">⭐ 我的自定义导航 · 分类管理</div>
+            <button id="addCustomBtn" class="small-btn" style="background:#2c8d9e20;">➕ 添加链接</button>
         </div>
-        <div id="customLinksContainer"></div>
+        <div class="category-bar" id="categoryBar"></div>
+        <div id="customLinksContainer" class="links-grid"></div>
         <div class="add-link-row">
             <input type="text" id="newLinkName" placeholder="名称">
             <input type="text" id="newLinkUrl" placeholder="网址 https://">
+            <select id="newLinkCategory"></select>
             <button id="quickAddBtn" class="small-btn primary-btn">快速添加</button>
+            <button id="manageCategoryBtn" class="small-btn">🏷️ 管理分类</button>
         </div>
-        <div style="font-size: 11px; color: #94a3b8; margin-top: 8px;">✨ 登录后云端保存 | 点击自动计数</div>
+        <div style="font-size: 12px; color: #6c8ea0; margin-top: 14px;">✨ 云端保存 | 点击链接实时计数 | 跨设备同步</div>
     </div>
 
     <!-- 自开发工具箱 -->
-    <div class="card">
-        <div class="section-title">⚙️ 自开发</div>
+    <div class="glass-card">
+        <div class="card-header">
+            <div class="section-title">⚙️ 自开发工具箱</div>
+        </div>
         <div class="tools-grid">
             <button class="tool-btn" id="jizhangBtn">💰 小七记账</button>
             <button class="tool-btn" id="bijianBtn">📝 小七便签</button>
@@ -412,250 +658,162 @@
             <button class="tool-btn" id="friendLinkBtn">🔗 友链申请</button>
         </div>
     </div>
-
-    <div class="footer">
-        💡 云端驱动 | 昵称+密码登录 (英文数字) | 触摸优化
-    </div>
+    <div class="footer">💡 云端同步 | 下班时间随账号 | 全部分类显示所属标签 | 点击次数实时更新</div>
 </div>
 
 <!-- 登录弹窗 -->
-<div id="loginModal" class="modal">
-    <div class="modal-box">
-        <span class="close-x" id="closeLoginModal">&times;</span>
-        <div id="loginForm">
-            <h3>登录小七导航</h3>
-            <input type="text" id="loginNick" placeholder="昵称 (英文+数字)" autocomplete="off">
-            <input type="password" id="loginPwd" placeholder="密码 (英文+数字)">
-            <button id="doLoginBtn" class="modal-btn modal-btn-confirm" style="width:100%;">登录</button>
-            <div style="margin-top: 12px;">
-                <span id="switchToReg" style="color:#2c8d9e; font-size:13px; cursor:pointer;">没有账号？立即注册</span>
-            </div>
-            <div id="loginError" class="error-msg"></div>
+<div id="loginModal" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>✨ 欢迎回来</h3>
+            <span class="modal-close" id="closeLoginModalBtn">&times;</span>
         </div>
-        <div id="regForm" style="display:none;">
-            <h3>注册账号</h3>
-            <input type="text" id="regNick" placeholder="昵称 (英文+数字, 2-20位)" autocomplete="off">
-            <input type="password" id="regPwd" placeholder="密码 (英文+数字, 4-20位)">
-            <input type="password" id="regConfirmPwd" placeholder="确认密码">
-            <button id="doRegBtn" class="modal-btn modal-btn-confirm" style="width:100%;">注册并登录</button>
-            <div style="margin-top: 12px;">
-                <span id="switchToLogin" style="color:#2c8d9e; font-size:13px; cursor:pointer;">← 返回登录</span>
+        <div class="modal-body">
+            <div id="loginFormContent">
+                <input type="text" id="loginNick" placeholder="昵称 (英文+数字)">
+                <input type="password" id="loginPwd" placeholder="密码">
+                <button id="doLoginBtn" class="modal-btn modal-btn-primary">登录</button>
+                <div class="modal-footer-links" style="text-align:center; margin-top:12px;">
+                    <span id="switchToRegBtn" style="color:#2c8d9e; cursor:pointer;">没有账号？立即注册</span>
+                </div>
+                <div class="info-tip" style="margin-top: 16px; justify-content: center; font-size:12px;">
+                    🔐 找回密码提示：密码无法自助找回，请联系管理员重置
+                </div>
+                <div id="loginError" class="error-msg"></div>
             </div>
-            <div id="regError" class="error-msg"></div>
+            <div id="regFormContent" style="display:none;">
+                <input type="text" id="regNick" placeholder="昵称 (英文+数字 2-20)">
+                <input type="password" id="regPwd" placeholder="密码 (英文+数字 4-20)">
+                <input type="password" id="regConfirmPwd" placeholder="确认密码">
+                <button id="doRegBtn" class="modal-btn modal-btn-primary">注册并登录</button>
+                <div style="text-align:center; margin-top:12px;">
+                    <span id="switchToLoginBtn" style="color:#2c8d9e; cursor:pointer;">← 返回登录</span>
+                </div>
+                <div id="regError" class="error-msg"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑链接弹窗 -->
+<div id="editLinkModal" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>✏️ 编辑链接</h3>
+            <span class="modal-close" id="closeEditModalBtn">&times;</span>
+        </div>
+        <div class="modal-body">
+            <input type="text" id="editLinkName" placeholder="链接名称">
+            <input type="text" id="editLinkUrl" placeholder="网址 https://">
+            <input type="text" id="editLinkIcon" placeholder="图标 emoji (如 🔗)">
+            <select id="editLinkCategory"></select>
+            <button id="saveEditBtn" class="modal-btn modal-btn-primary">保存修改</button>
+        </div>
+    </div>
+</div>
+
+<!-- 分类管理弹窗 -->
+<div id="categoryModal" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>📂 管理分类</h3>
+            <span class="modal-close" id="closeCategoryModalBtn">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="categoryList"></div>
+            <div style="display:flex; gap:10px; margin-top: 16px;">
+                <input type="text" id="newCategoryName" placeholder="新分类名称">
+                <button id="addCategoryBtn" class="modal-btn modal-btn-primary" style="width:auto; padding: 0 20px;">添加</button>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- 友链申请弹窗 -->
-<div id="friendModal" class="modal">
-    <div class="modal-box">
-        <span class="close-x" id="closeFriendModal">&times;</span>
-        <h3>🔗 友链申请</h3>
-        <p style="font-size:13px; color:#6c819e;">请输入您的网站地址</p>
-        <input type="url" id="friendUrl" placeholder="https://你的网站.com">
-        <div class="modal-buttons">
-            <button id="submitFriendBtn" class="modal-btn modal-btn-confirm">提交</button>
-            <button id="cancelFriendBtn" class="modal-btn modal-btn-cancel">取消</button>
+<div id="friendModal" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>🔗 友链申请</h3>
+            <span class="modal-close" id="closeFriendModalBtn">&times;</span>
         </div>
-        <div id="friendMsg" class="error-msg" style="color:#2c8d9e;"></div>
+        <div class="modal-body">
+            <input type="url" id="friendUrl" placeholder="你的网站地址 https://...">
+            <button id="submitFriendBtn" class="modal-btn modal-btn-primary" style="margin-top: 12px;">提交申请</button>
+            <div id="friendMsg" class="error-msg" style="color:#2c8d9e;"></div>
+        </div>
     </div>
 </div>
 
 <script type="module">
-    // Supabase 配置
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     const SUPABASE_URL = 'https://ogldsgcwldzrjqbvqbft.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9nbGRzZ2N3bGR6cmpxYnZxYmZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2NTA4ODUsImV4cCI6MjA5MjIyNjg4NX0.8UiI78s-j7J4dXetBmDWs3u59rAp5ZJqLbk2J66xGyo';
-    
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     
-    // 当前用户
     let currentUser = null;
     let customLinks = [];
+    let userCategories = ['默认', '全部'];  // "全部" 是虚拟分类，不存数据库
+    let activeCategory = '全部';
+    let currentEditingLinkId = null;
     
-    // 工具函数
+    function showToast(msg) {
+        let toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerText = msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
+    }
+    
     function hashPwd(pwd) { return btoa(unescape(encodeURIComponent(pwd + "xiaoqi_salt"))); }
     function isValidNick(n) { return /^[A-Za-z0-9]{2,20}$/.test(n); }
     function isValidPwd(p) { return /^[A-Za-z0-9]{4,20}$/.test(p); }
     function escapeHtml(s) { if(!s) return ''; return s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
     
-    // 加载用户自定义链接
-    async function loadCustomLinks() {
-        if (!currentUser) return [];
-        const { data, error } = await supabase.from('user_links').select('*').eq('username', currentUser).order('id');
-        if (error) return [];
-        return data.map(item => ({ id: item.id, name: item.link_name, url: item.link_url, icon: item.link_icon || '🔗', clicks: item.click_count || 0 }));
-    }
-    
-    // 添加链接
-    async function addLink(name, url, icon = '🔗') {
-        if (!currentUser) { alert("请先登录"); return false; }
-        if (!url.startsWith('http')) url = 'https://' + url;
-        const { error } = await supabase.from('user_links').insert({ username: currentUser, link_name: name, link_url: url, link_icon: icon, click_count: 0 });
-        if (error) { alert("添加失败"); return false; }
-        await refreshCustomLinks();
-        return true;
-    }
-    
-    // 更新链接
-    async function updateLink(id, name, url, icon, clicks) {
-        await supabase.from('user_links').update({ link_name: name, link_url: url, link_icon: icon, click_count: clicks }).eq('id', id).eq('username', currentUser);
-        await refreshCustomLinks();
-    }
-    
-    // 删除链接
-    async function deleteLink(id) {
-        await supabase.from('user_links').delete().eq('id', id).eq('username', currentUser);
-        await refreshCustomLinks();
-    }
-    
-    // 增加点击
-    async function incrementClick(id, currentClicks) {
-        await supabase.from('user_links').update({ click_count: currentClicks + 1 }).eq('id', id).eq('username', currentUser);
-        await refreshCustomLinks();
-    }
-    
-    async function refreshCustomLinks() {
-        customLinks = await loadCustomLinks();
-        renderCustomLinks();
-    }
-    
-    // 渲染自定义链接
-    function renderCustomLinks() {
-        const container = document.getElementById('customLinksContainer');
-        if (!container) return;
-        if (!currentUser) {
-            container.innerHTML = '<div style="padding:16px; text-align:center; color:#94a3b8;">🔐 登录后即可保存自定义链接</div>';
-            return;
-        }
-        if (customLinks.length === 0) {
-            container.innerHTML = '<div style="padding:16px; text-align:center; color:#94a3b8;">✨ 暂无链接，点击上方添加</div>';
-            return;
-        }
-        container.innerHTML = '';
-        customLinks.forEach(link => {
-            const div = document.createElement('div');
-            div.className = 'link-item';
-            div.innerHTML = `
-                <div class="link-left" data-id="${link.id}" data-url="${escapeHtml(link.url)}">
-                    <div class="link-icon">${link.icon}</div>
-                    <div class="link-info">
-                        <div class="link-name">${escapeHtml(link.name)}</div>
-                        <span class="click-badge">📊 ${link.clicks} 次</span>
-                    </div>
-                </div>
-                <div class="link-actions">
-                    <button class="icon-btn edit-link" data-id="${link.id}" data-name="${escapeHtml(link.name)}" data-url="${escapeHtml(link.url)}" data-icon="${link.icon}">✏️</button>
-                    <button class="icon-btn delete-link" data-id="${link.id}">🗑️</button>
-                </div>
-            `;
-            // 点击打开链接
-            div.querySelector('.link-left').addEventListener('click', async (e) => {
-                if (e.target.closest('.icon-btn')) return;
-                await incrementClick(link.id, link.clicks);
-                window.open(link.url, '_blank');
-            });
-            container.appendChild(div);
-        });
-        // 编辑
-        document.querySelectorAll('.edit-link').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                const id = parseInt(btn.dataset.id);
-                const oldName = btn.dataset.name;
-                const oldUrl = btn.dataset.url;
-                const newName = prompt("编辑名称", oldName);
-                if (!newName) return;
-                let newUrl = prompt("编辑网址", oldUrl);
-                if (!newUrl) return;
-                if (!newUrl.startsWith('http')) newUrl = 'https://' + newUrl;
-                const newIcon = prompt("图标(emoji)", btn.dataset.icon || "🔗");
-                await updateLink(id, newName.trim(), newUrl, newIcon || "🔗", customLinks.find(l => l.id === id)?.clicks || 0);
-            });
-        });
-        // 删除
-        document.querySelectorAll('.delete-link').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                if (confirm("删除此链接？")) {
-                    await deleteLink(parseInt(btn.dataset.id));
-                }
-            });
-        });
-        // 高亮搜索
-        applySearchHighlight();
-    }
-    
-    // 常用办公套件 (固定)
-    const defaultSites = [
-        { name: "小七便签", url: "https://yanqi-spec.github.io/-/", icon: "📝" },
-        { name: "秘塔搜索AI", url: "https://metaso.cn/", icon: "🤖" },
-        { name: "在线PS", url: "https://ps.gaoding.com/#/", icon: "🎨" },
-        { name: "Word转长图", url: "https://xpdf.cn/word-to-long-image", icon: "🖼️" },
-        { name: "小说txt下载", url: "http://aiqu126.com/", icon: "📚" },
-        { name: "表情包搜索", url: "https://emojis.click/zh", icon: "😆" },
-        { name: "无水印解析", url: "https://pv.vlogdownloader.com/", icon: "⬇️" }
-    ];
-    const defaultClicksKey = "default_clicks";
-    function getDefaultClicks() { const s = localStorage.getItem(defaultClicksKey); return s ? JSON.parse(s) : {}; }
-    function saveDefaultClicks(map) { localStorage.setItem(defaultClicksKey, JSON.stringify(map)); }
-    function incrementDefaultClick(url) { const map = getDefaultClicks(); map[url] = (map[url] || 0) + 1; saveDefaultClicks(map); renderDefaultLinks(); }
-    function renderDefaultLinks() {
-        const container = document.getElementById('defaultLinksContainer');
-        if (!container) return;
-        container.innerHTML = '';
-        defaultSites.forEach(site => {
-            const clicks = getDefaultClicks()[site.url] || 0;
-            const div = document.createElement('div');
-            div.className = 'link-item';
-            div.innerHTML = `
-                <div class="link-left" data-url="${escapeHtml(site.url)}">
-                    <div class="link-icon">${site.icon}</div>
-                    <div class="link-info">
-                        <div class="link-name">${escapeHtml(site.name)}</div>
-                        <span class="click-badge">点击 ${clicks}</span>
-                    </div>
-                </div>
-            `;
-            div.querySelector('.link-left').addEventListener('click', (e) => {
-                incrementDefaultClick(site.url);
-                window.open(site.url, '_blank');
-            });
-            container.appendChild(div);
-        });
-        applySearchHighlight();
-    }
-    
-    // 搜索高亮
-    let currentKeyword = '';
-    function applySearchHighlight() {
-        if (!currentKeyword) return;
-        const regex = new RegExp(`(${currentKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-        document.querySelectorAll('.link-name').forEach(el => {
-            const original = el.innerText;
-            if (regex.test(original)) {
-                el.innerHTML = original.replace(regex, `<span style="background:#ffeb9e; color:#c45b00; border-radius:4px; padding:0 2px;">$1</span>`);
-            } else {
-                el.innerHTML = original;
-            }
-        });
-    }
-    function clearHighlight() {
-        document.querySelectorAll('.link-name').forEach(el => { el.innerHTML = el.innerText; });
-    }
-    function searchLinks() {
-        const kw = document.getElementById('searchInput').value.trim();
-        currentKeyword = kw;
-        if (!kw) {
-            clearHighlight();
-            return;
-        }
-        clearHighlight();
-        applySearchHighlight();
-    }
-    
-    // 下班倒计时
+    // ================= 下班时间云端存储 =================
     let offHour = 18, offMin = 0;
+    let countdownInterval = null;
+    
+    async function loadOffworkTimeFromCloud() {
+        if(!currentUser) return;
+        const { data, error } = await supabase
+            .from('profiles')
+            .select('offwork_time')
+            .eq('nickname', currentUser)
+            .maybeSingle();
+        if(data && data.offwork_time) {
+            const [h, m] = data.offwork_time.split(':').map(Number);
+            if(!isNaN(h) && !isNaN(m)) {
+                offHour = h;
+                offMin = m;
+                document.getElementById('offworkTime').value = `${offHour.toString().padStart(2,'0')}:${offMin.toString().padStart(2,'0')}`;
+            }
+        }
+        updateCountdown();
+    }
+    
+    async function saveOffworkTimeToCloud() {
+        if(!currentUser) return;
+        const timeStr = `${offHour.toString().padStart(2,'0')}:${offMin.toString().padStart(2,'0')}`;
+        await supabase
+            .from('profiles')
+            .update({ offwork_time: timeStr })
+            .eq('nickname', currentUser);
+        showToast(`下班时间已云端保存: ${timeStr}`);
+    }
+    
+    function setOffworkAndPersist() {
+        const val = document.getElementById('offworkTime').value;
+        const [h, m] = val.split(':').map(Number);
+        if(!isNaN(h) && !isNaN(m)) {
+            offHour = h;
+            offMin = m;
+            saveOffworkTimeToCloud();
+            updateCountdown();
+        } else {
+            showToast("时间无效");
+        }
+    }
+    
     function updateCountdown() {
         const now = new Date();
         const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), offHour, offMin, 0);
@@ -670,34 +828,421 @@
             el.innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
         }
     }
-    function setOffwork() {
-        const val = document.getElementById('offworkTime').value;
-        const [h, m] = val.split(':').map(Number);
-        offHour = h; offMin = m;
-        updateCountdown();
-        alert(`下班时间设为 ${h}:${m}`);
+    
+    // 加载用户数据
+    async function loadUserData() {
+        if(!currentUser) return;
+        
+        // 加载链接
+        let { data: links, error: linksError } = await supabase
+            .from('user_links')
+            .select('*')
+            .eq('username', currentUser)
+            .order('id');
+        if(!linksError && links) {
+            customLinks = links.map(l => ({ 
+                id: l.id, 
+                name: l.link_name, 
+                url: l.link_url, 
+                icon: l.link_icon || '🔗', 
+                clicks: l.click_count || 0, 
+                category: l.category || '默认' 
+            }));
+        } else {
+            customLinks = [];
+        }
+        
+        // 加载分类（排除"全部"，它是虚拟的）
+        let { data: cats, error: catsError } = await supabase
+            .from('user_categories')
+            .select('cat_name')
+            .eq('username', currentUser)
+            .order('id');
+        if(cats && cats.length) {
+            userCategories = ['全部', ...cats.map(c => c.cat_name)];
+        } else {
+            userCategories = ['全部', '默认'];
+            try {
+                await supabase.from('user_categories').insert({ username: currentUser, cat_name: '默认' });
+            } catch(e) { console.log("分类表可能未创建", e); }
+        }
+        
+        renderCategoryBar();
+        renderCustomLinks();
     }
     
-    // 用户认证 (profiles 表)
+    async function saveCategoriesToDB() {
+        if(!currentUser) return;
+        // 过滤掉 "全部" 虚拟分类
+        const realCategories = userCategories.filter(c => c !== '全部');
+        await supabase.from('user_categories').delete().eq('username', currentUser);
+        for(let cat of realCategories) {
+            await supabase.from('user_categories').insert({ username: currentUser, cat_name: cat });
+        }
+    }
+    
+    async function addLink(name, url, icon = '🔗', category = '默认') {
+        if(!currentUser) { showToast("请先登录"); return false; }
+        if(!url.startsWith('http')) url = 'https://' + url;
+        const { error } = await supabase.from('user_links').insert({ 
+            username: currentUser, 
+            link_name: name, 
+            link_url: url, 
+            link_icon: icon, 
+            click_count: 0, 
+            category 
+        });
+        if(error) { 
+            showToast("添加失败: " + error.message); 
+            return false; 
+        }
+        await loadUserData();
+        showToast("添加成功");
+        return true;
+    }
+    
+    async function updateLinkById(id, name, url, icon, category) {
+        const { error } = await supabase.from('user_links').update({ 
+            link_name: name, 
+            link_url: url, 
+            link_icon: icon, 
+            category 
+        }).eq('id', id);
+        if(error) { 
+            showToast("修改失败: " + error.message); 
+            return false; 
+        }
+        await loadUserData();
+        showToast("修改成功！");
+        return true;
+    }
+    
+    async function deleteLink(id) {
+        await supabase.from('user_links').delete().eq('id', id);
+        await loadUserData();
+        showToast("已删除");
+    }
+    
+    async function incrementClick(id, currentClicks) {
+        await supabase.from('user_links').update({ click_count: currentClicks + 1 }).eq('id', id);
+        // 实时更新本地数据并刷新显示
+        const link = customLinks.find(l => l.id === id);
+        if(link) link.clicks = currentClicks + 1;
+        renderCustomLinks();  // 刷新显示
+    }
+    
+    function renderCustomLinks() {
+        const container = document.getElementById('customLinksContainer');
+        if(!container) return;
+        if(!currentUser) {
+            container.innerHTML = '<div style="padding:28px; text-align:center; background:#f4f9fe; border-radius:32px;">🔐 登录后即可创建分类并保存链接</div>';
+            return;
+        }
+        
+        let filtered = [];
+        if(activeCategory === '全部') {
+            filtered = [...customLinks];
+        } else {
+            filtered = customLinks.filter(link => link.category === activeCategory);
+        }
+        
+        if(filtered.length === 0) {
+            container.innerHTML = `<div style="padding:28px; text-align:center;">📭 当前分类「${activeCategory}」暂无链接，点击上方添加</div>`;
+            return;
+        }
+        
+        container.innerHTML = '';
+        filtered.forEach(link => {
+            const card = document.createElement('div');
+            card.className = 'link-card';
+            // 显示分类标签（只有在"全部"视图下才显示所属分类）
+            const categoryHtml = activeCategory === '全部' ? `<span class="category-badge">📁 ${escapeHtml(link.category)}</span>` : '';
+            card.innerHTML = `
+                <div class="link-left" data-id="${link.id}" data-url="${escapeHtml(link.url)}">
+                    <div class="link-icon">${link.icon}</div>
+                    <div class="link-info">
+                        <div class="link-name">${escapeHtml(link.name)}</div>
+                        <div class="link-meta">
+                            <span class="click-badge">📊 ${link.clicks} 次点击</span>
+                            ${categoryHtml}
+                        </div>
+                    </div>
+                </div>
+                <div class="link-actions">
+                    <button class="icon-btn edit-link" data-id="${link.id}" data-name="${escapeHtml(link.name)}" data-url="${escapeHtml(link.url)}" data-icon="${link.icon}" data-cat="${link.category}">✏️</button>
+                    <button class="icon-btn delete-link" data-id="${link.id}">🗑️</button>
+                </div>
+            `;
+            card.querySelector('.link-left').addEventListener('click', async (e) => {
+                if(e.target.closest('.icon-btn')) return;
+                await incrementClick(link.id, link.clicks);
+                window.open(link.url, '_blank');
+            });
+            container.appendChild(card);
+        });
+        
+        // 编辑事件
+        document.querySelectorAll('.edit-link').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentEditingLinkId = parseInt(btn.dataset.id);
+                document.getElementById('editLinkName').value = btn.dataset.name;
+                document.getElementById('editLinkUrl').value = btn.dataset.url;
+                document.getElementById('editLinkIcon').value = btn.dataset.icon || '🔗';
+                const catSelect = document.getElementById('editLinkCategory');
+                const realCategories = userCategories.filter(c => c !== '全部');
+                catSelect.innerHTML = '';
+                realCategories.forEach(cat => {
+                    const opt = document.createElement('option');
+                    opt.value = cat;
+                    opt.innerText = cat;
+                    if(cat === btn.dataset.cat) opt.selected = true;
+                    catSelect.appendChild(opt);
+                });
+                openModal('editLinkModal');
+            });
+        });
+        
+        // 删除事件
+        document.querySelectorAll('.delete-link').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                if(confirm("确定删除此链接？")) {
+                    await deleteLink(parseInt(btn.dataset.id));
+                }
+            });
+        });
+        applySearchHighlight();
+    }
+    
+    function renderCategoryBar() {
+        const bar = document.getElementById('categoryBar');
+        if(!currentUser) {
+            bar.innerHTML = '<span style="opacity:0.6">登录后可使用分类</span>';
+            return;
+        }
+        bar.innerHTML = '';
+        userCategories.forEach(cat => {
+            const span = document.createElement('span');
+            span.className = `cat-tag ${activeCategory === cat ? 'active' : ''}`;
+            span.innerText = cat === '全部' ? '📋 全部' : cat;
+            span.onclick = () => {
+                activeCategory = cat;
+                renderCategoryBar();
+                renderCustomLinks();
+            };
+            bar.appendChild(span);
+        });
+        const addBtn = document.createElement('button');
+        addBtn.innerText = '+ 分类';
+        addBtn.className = 'add-cat-btn';
+        addBtn.onclick = () => openModal('categoryModal');
+        bar.appendChild(addBtn);
+        
+        const select = document.getElementById('newLinkCategory');
+        if(select) {
+            const realCategories = userCategories.filter(c => c !== '全部');
+            select.innerHTML = '';
+            realCategories.forEach(c => {
+                let opt = document.createElement('option');
+                opt.value = c;
+                opt.innerText = c;
+                select.appendChild(opt);
+            });
+        }
+    }
+    
+    async function addCategory(catName) {
+        if(!currentUser) return;
+        if(userCategories.includes(catName)) {
+            showToast("分类已存在");
+            return;
+        }
+        userCategories.push(catName);
+        await saveCategoriesToDB();
+        renderCategoryBar();
+        renderCustomLinks();
+        refreshCategoryList();
+        showToast(`分类“${catName}”已添加`);
+    }
+    
+    async function removeCategory(catName) {
+        if(catName === '全部') {
+            showToast("不能删除「全部」分类");
+            return;
+        }
+        if(catName === '默认') {
+            showToast("不能删除默认分类");
+            return;
+        }
+        userCategories = userCategories.filter(c => c !== catName);
+        // 将该分类下的链接移至默认
+        for(let link of customLinks.filter(l => l.category === catName)) {
+            await supabase.from('user_links').update({ category: '默认' }).eq('id', link.id);
+        }
+        await saveCategoriesToDB();
+        await loadUserData();
+        if(activeCategory === catName) activeCategory = '全部';
+        renderCategoryBar();
+        renderCustomLinks();
+        refreshCategoryList();
+        showToast(`分类“${catName}”已删除，链接已移至默认`);
+    }
+    
+    function refreshCategoryList() {
+        const listDiv = document.getElementById('categoryList');
+        if(!listDiv) return;
+        const realCategories = userCategories.filter(c => c !== '全部');
+        listDiv.innerHTML = '';
+        realCategories.forEach(cat => {
+            let div = document.createElement('div');
+            div.className = 'category-item';
+            div.innerHTML = `<span>${cat}</span>${cat !== '默认' ? '<button class="small-btn" data-cat="'+cat+'">删除</button>' : '<span style="color:#94a3b8; font-size:12px;">默认分类</span>'}`;
+            listDiv.appendChild(div);
+            if(cat !== '默认') {
+                div.querySelector('button').onclick = async () => {
+                    if(confirm(`删除分类“${cat}”，其中的链接将移至“默认”分类`)) {
+                        await removeCategory(cat);
+                        openModal('categoryModal');
+                    }
+                };
+            }
+        });
+    }
+    
+    // 固定办公套件（点击次数本地存储，因为是公共链接）
+    const defaultSites = [
+        { name: "小七便签", url: "https://yanqi-spec.github.io/-/", icon: "📝" },
+        { name: "秘塔搜索AI", url: "https://metaso.cn/", icon: "🤖" },
+        { name: "在线PS", url: "https://ps.gaoding.com/#/", icon: "🎨" },
+        { name: "Word转长图", url: "https://xpdf.cn/word-to-long-image", icon: "🖼️" },
+        { name: "小说txt下载", url: "http://aiqu126.com/", icon: "📚" },
+        { name: "表情包搜索", url: "https://emojis.click/zh", icon: "😆" },
+        { name: "无水印解析", url: "https://pv.vlogdownloader.com/", icon: "⬇️" }
+    ];
+    const defaultClicksKey = "default_clicks_v2";
+    function getDefaultClicks() { return JSON.parse(localStorage.getItem(defaultClicksKey) || '{}'); }
+    function saveDefaultClicks(map) { localStorage.setItem(defaultClicksKey, JSON.stringify(map)); }
+    function incrementDefaultClick(url) { let map = getDefaultClicks(); map[url] = (map[url]||0)+1; saveDefaultClicks(map); renderDefaultLinks(); }
+    function renderDefaultLinks() {
+        const container = document.getElementById('defaultLinksContainer');
+        if(!container) return;
+        container.innerHTML = '';
+        defaultSites.forEach(site => {
+            const clicks = getDefaultClicks()[site.url] || 0;
+            const card = document.createElement('div');
+            card.className = 'link-card';
+            card.innerHTML = `
+                <div class="link-left" data-url="${site.url}">
+                    <div class="link-icon">${site.icon}</div>
+                    <div class="link-info">
+                        <div class="link-name">${site.name}</div>
+                        <span class="click-badge">📊 ${clicks} 次点击</span>
+                    </div>
+                </div>
+            `;
+            card.querySelector('.link-left').addEventListener('click', () => {
+                incrementDefaultClick(site.url);
+                window.open(site.url, '_blank');
+            });
+            container.appendChild(card);
+        });
+    }
+    
+    // 搜索高亮
+    let currentKeyword = '';
+    function applySearchHighlight() {
+        if(!currentKeyword) return;
+        const regex = new RegExp(`(${currentKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        document.querySelectorAll('.link-name').forEach(el => {
+            let orig = el.innerText;
+            if(regex.test(orig)) {
+                el.innerHTML = orig.replace(regex, `<span style="background:#ffeb9e; border-radius:4px; padding:0 2px;">$1</span>`);
+            }
+        });
+    }
+    function searchLinks() {
+        currentKeyword = document.getElementById('searchInput').value.trim();
+        document.querySelectorAll('.link-name').forEach(el => el.innerHTML = el.innerText);
+        if(currentKeyword) applySearchHighlight();
+    }
+    
+    // 弹窗控制
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if(modal) {
+            if(modalId === 'categoryModal') refreshCategoryList();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if(modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+    
+    // 认证
     async function signUp(nick, pwd) {
-        if (!isValidNick(nick)) return { ok: false, msg: "昵称需为英文+数字，2-20位" };
-        if (!isValidPwd(pwd)) return { ok: false, msg: "密码需为英文+数字，4-20位" };
-        const { data: exist } = await supabase.from('profiles').select('nickname').eq('nickname', nick).maybeSingle();
-        if (exist) return { ok: false, msg: "昵称已存在" };
-        const { error } = await supabase.from('profiles').insert({ nickname: nick, password_hash: hashPwd(pwd) });
-        if (error) return { ok: false, msg: "注册失败，请确保已创建 profiles 表" };
-        return { ok: true };
+        if(!isValidNick(nick)) return {ok:false, msg:"昵称需为英文+数字，2-20位"};
+        if(!isValidPwd(pwd)) return {ok:false, msg:"密码需为英文+数字，4-20位"};
+        const {data: exist} = await supabase.from('profiles').select('nickname').eq('nickname', nick).maybeSingle();
+        if(exist) return {ok:false, msg:"昵称已存在"};
+        const {error} = await supabase.from('profiles').insert({nickname: nick, password_hash: hashPwd(pwd)});
+        if(error) return {ok:false, msg:"注册失败"};
+        return {ok: true};
     }
     async function signIn(nick, pwd) {
-        const { data, error } = await supabase.from('profiles').select('nickname, password_hash').eq('nickname', nick).maybeSingle();
-        if (error || !data) return { ok: false, msg: "用户不存在" };
-        if (data.password_hash !== hashPwd(pwd)) return { ok: false, msg: "密码错误" };
-        return { ok: true };
+        const {data} = await supabase.from('profiles').select('nickname, password_hash, offwork_time').eq('nickname', nick).maybeSingle();
+        if(!data || data.password_hash !== hashPwd(pwd)) return {ok:false, msg:"账号或密码错误"};
+        return {ok: true, data};
+    }
+    async function doLogin(nick, pwd) {
+        const res = await signIn(nick, pwd);
+        if(res.ok) {
+            currentUser = nick;
+            localStorage.setItem('xiaoqi_user', nick);
+            updateUserUI();
+            closeModal('loginModal');
+            await loadUserData();
+            await loadOffworkTimeFromCloud();
+            showToast("登录成功");
+        } else {
+            document.getElementById('loginError').innerText = res.msg;
+        }
+    }
+    async function doReg(nick, pwd, confirm) {
+        if(pwd !== confirm) {
+            document.getElementById('regError').innerText = "两次密码不一致";
+            return;
+        }
+        const res = await signUp(nick, pwd);
+        if(res.ok) {
+            alert("注册成功！请登录");
+            document.getElementById('loginFormContent').style.display = 'block';
+            document.getElementById('regFormContent').style.display = 'none';
+            document.getElementById('regError').innerText = '';
+        } else {
+            document.getElementById('regError').innerText = res.msg;
+        }
+    }
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem('xiaoqi_user');
+        customLinks = [];
+        userCategories = ['全部', '默认'];
+        activeCategory = '全部';
+        updateUserUI();
+        renderCustomLinks();
+        renderCategoryBar();
+        showToast("已退出登录");
     }
     function updateUserUI() {
         const nameSpan = document.getElementById('userNameDisplay');
         const btn = document.getElementById('authActionBtn');
-        if (currentUser) {
+        if(currentUser) {
             nameSpan.innerHTML = `👤 ${currentUser}`;
             btn.innerHTML = '退出登录';
             btn.className = 'logout-btn';
@@ -707,90 +1252,136 @@
             btn.className = 'login-btn';
         }
     }
-    
-    // 登录登出
-    async function doLogin(nick, pwd) {
-        const res = await signIn(nick, pwd);
-        if (res.ok) {
-            currentUser = nick;
-            localStorage.setItem('xiaoqi_user', nick);
-            updateUserUI();
-            closeLoginModal();
-            await refreshCustomLinks();
-        } else {
-            document.getElementById('loginError').innerText = res.msg;
-        }
-    }
-    async function doReg(nick, pwd, confirm) {
-        if (pwd !== confirm) { document.getElementById('regError').innerText = "两次密码不一致"; return; }
-        const res = await signUp(nick, pwd);
-        if (res.ok) {
-            alert("注册成功！请登录");
-            switchToLogin();
-        } else {
-            document.getElementById('regError').innerText = res.msg;
-        }
-    }
-    function logout() {
-        currentUser = null;
-        localStorage.removeItem('xiaoqi_user');
-        customLinks = [];
-        updateUserUI();
-        renderCustomLinks();
-    }
     async function initSession() {
         const saved = localStorage.getItem('xiaoqi_user');
-        if (saved) {
-            const { data } = await supabase.from('profiles').select('nickname').eq('nickname', saved).maybeSingle();
-            if (data) {
+        if(saved) {
+            const {data} = await supabase.from('profiles').select('nickname').eq('nickname', saved).maybeSingle();
+            if(data) {
                 currentUser = saved;
-                customLinks = await loadCustomLinks();
+                await loadUserData();
+                await loadOffworkTimeFromCloud();
             }
         }
         updateUserUI();
         renderCustomLinks();
+        renderCategoryBar();
     }
     
-    // 弹窗控制
-    const loginModal = document.getElementById('loginModal');
-    const friendModal = document.getElementById('friendModal');
-    function openLoginModal() { loginModal.style.display = 'flex'; }
-    function closeLoginModal() { loginModal.style.display = 'none'; document.getElementById('loginError').innerText = ''; document.getElementById('regError').innerText = ''; }
-    function openFriendModal() { friendModal.style.display = 'flex'; }
-    function closeFriendModal() { friendModal.style.display = 'none'; document.getElementById('friendUrl').value = ''; document.getElementById('friendMsg').innerText = ''; }
-    function switchToReg() { document.getElementById('loginForm').style.display = 'none'; document.getElementById('regForm').style.display = 'block'; }
-    function switchToLogin() { document.getElementById('loginForm').style.display = 'block'; document.getElementById('regForm').style.display = 'none'; }
-    
     // 事件绑定
-    document.getElementById('authActionBtn').onclick = () => { if (currentUser) logout(); else openLoginModal(); };
-    document.getElementById('closeLoginModal').onclick = closeLoginModal;
-    document.getElementById('switchToReg').onclick = switchToReg;
-    document.getElementById('switchToLogin').onclick = switchToLogin;
-    document.getElementById('doLoginBtn').onclick = () => { const n = document.getElementById('loginNick').value.trim(); const p = document.getElementById('loginPwd').value; doLogin(n, p); };
-    document.getElementById('doRegBtn').onclick = () => { const n = document.getElementById('regNick').value.trim(); const p = document.getElementById('regPwd').value; const c = document.getElementById('regConfirmPwd').value; doReg(n, p, c); };
-    document.getElementById('addCustomBtn').onclick = () => { if(!currentUser){ alert("请先登录"); return; } let n = prompt("链接名称"); if(n){ let u = prompt("网址"); if(u) addLink(n, u); } };
-    document.getElementById('quickAddBtn').onclick = () => { if(!currentUser){ alert("请先登录"); return; } let n = document.getElementById('newLinkName').value.trim(); let u = document.getElementById('newLinkUrl').value.trim(); if(n && u) { addLink(n, u); document.getElementById('newLinkName').value = ''; document.getElementById('newLinkUrl').value = ''; } else alert("填写完整"); };
+    window.onload = () => {
+        renderDefaultLinks();
+        updateCountdown();
+        if(countdownInterval) clearInterval(countdownInterval);
+        countdownInterval = setInterval(updateCountdown, 1000);
+        initSession();
+    };
+    
+    window.onclick = (e) => {
+        if(e.target.classList && e.target.classList.contains('modal-overlay')) {
+            e.target.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    };
+    
+    document.getElementById('authActionBtn').onclick = () => {
+        if(currentUser) logout();
+        else openModal('loginModal');
+    };
+    document.getElementById('closeLoginModalBtn').onclick = () => closeModal('loginModal');
+    document.getElementById('switchToRegBtn').onclick = () => {
+        document.getElementById('loginFormContent').style.display = 'none';
+        document.getElementById('regFormContent').style.display = 'block';
+    };
+    document.getElementById('switchToLoginBtn').onclick = () => {
+        document.getElementById('loginFormContent').style.display = 'block';
+        document.getElementById('regFormContent').style.display = 'none';
+    };
+    document.getElementById('doLoginBtn').onclick = () => {
+        doLogin(document.getElementById('loginNick').value.trim(), document.getElementById('loginPwd').value);
+    };
+    document.getElementById('doRegBtn').onclick = () => {
+        doReg(document.getElementById('regNick').value.trim(), document.getElementById('regPwd').value, document.getElementById('regConfirmPwd').value);
+    };
+    document.getElementById('addCustomBtn').onclick = () => {
+        if(!currentUser) { showToast("请先登录"); return; }
+        let n = prompt("链接名称");
+        if(n) {
+            let u = prompt("网址");
+            if(u) addLink(n, u);
+        }
+    };
+    document.getElementById('quickAddBtn').onclick = () => {
+        if(!currentUser) { showToast("请先登录"); return; }
+        let n = document.getElementById('newLinkName').value.trim();
+        let u = document.getElementById('newLinkUrl').value.trim();
+        let cat = document.getElementById('newLinkCategory').value;
+        if(n && u) {
+            addLink(n, u, '🔗', cat);
+            document.getElementById('newLinkName').value = '';
+            document.getElementById('newLinkUrl').value = '';
+        } else {
+            showToast("请填写完整");
+        }
+    };
     document.getElementById('searchBtn').onclick = searchLinks;
     document.getElementById('searchInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') searchLinks(); });
-    document.getElementById('setTimeBtn').onclick = setOffwork;
-    // 自开发按钮
+    document.getElementById('setTimeBtn').onclick = setOffworkAndPersist;
+    
     document.getElementById('jizhangBtn').onclick = () => window.open('https://yanqi-spec.github.io/jizhang/', '_blank');
     document.getElementById('bijianBtn').onclick = () => window.open('https://yanqi-spec.github.io/-/', '_blank');
     document.getElementById('saiboBtn').onclick = () => window.open('https://yanqi-spec.github.io/myns/', '_blank');
     document.getElementById('yangBtn').onclick = () => window.open('https://yanqi-spec.github.io/yanglegeyang/', '_blank');
-    document.getElementById('randomPwdBtn').onclick = () => { let pwd = Math.random().toString(36).slice(-10); navigator.clipboard.writeText(pwd); alert(`密码: ${pwd}`); };
-    document.getElementById('copyUrlBtn').onclick = () => { navigator.clipboard.writeText(window.location.href); alert("已复制地址"); };
-    document.getElementById('friendLinkBtn').onclick = openFriendModal;
-    document.getElementById('closeFriendModal').onclick = closeFriendModal;
-    document.getElementById('cancelFriendBtn').onclick = closeFriendModal;
-    document.getElementById('submitFriendBtn').onclick = () => { const url = document.getElementById('friendUrl').value.trim(); if(!url) { document.getElementById('friendMsg').innerText = "请输入网址"; return; } if(!url.startsWith('http')) { document.getElementById('friendMsg').innerText = "请以 http:// 或 https:// 开头"; return; } document.getElementById('friendMsg').innerHTML = "✅ 申请已提交！"; setTimeout(() => closeFriendModal(), 1500); };
-    window.onclick = (e) => { if(e.target === loginModal) closeLoginModal(); if(e.target === friendModal) closeFriendModal(); };
-    
-    // 启动
-    renderDefaultLinks();
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-    initSession();
+    document.getElementById('randomPwdBtn').onclick = () => {
+        let pwd = Math.random().toString(36).slice(-10);
+        navigator.clipboard.writeText(pwd);
+        showToast(`密码: ${pwd} 已复制`);
+    };
+    document.getElementById('copyUrlBtn').onclick = () => {
+        navigator.clipboard.writeText(window.location.href);
+        showToast("已复制地址");
+    };
+    document.getElementById('friendLinkBtn').onclick = () => openModal('friendModal');
+    document.getElementById('closeFriendModalBtn').onclick = () => closeModal('friendModal');
+    document.getElementById('submitFriendBtn').onclick = () => {
+        const url = document.getElementById('friendUrl').value.trim();
+        if(!url) {
+            document.getElementById('friendMsg').innerText = "请输入网址";
+            return;
+        }
+        if(!url.startsWith('http')) {
+            document.getElementById('friendMsg').innerText = "请以 http:// 或 https:// 开头";
+            return;
+        }
+        document.getElementById('friendMsg').innerHTML = "✅ 申请已提交！感谢支持~";
+        setTimeout(() => closeModal('friendModal'), 1500);
+    };
+    document.getElementById('manageCategoryBtn').onclick = () => {
+        if(currentUser) openModal('categoryModal');
+        else showToast("请先登录");
+    };
+    document.getElementById('closeCategoryModalBtn').onclick = () => closeModal('categoryModal');
+    document.getElementById('addCategoryBtn').onclick = async () => {
+        let val = document.getElementById('newCategoryName').value.trim();
+        if(val) await addCategory(val);
+        document.getElementById('newCategoryName').value = '';
+        refreshCategoryList();
+    };
+    document.getElementById('closeEditModalBtn').onclick = () => closeModal('editLinkModal');
+    document.getElementById('saveEditBtn').onclick = async () => {
+        if(!currentEditingLinkId) return;
+        const newName = document.getElementById('editLinkName').value.trim();
+        const newUrl = document.getElementById('editLinkUrl').value.trim();
+        const newIcon = document.getElementById('editLinkIcon').value.trim() || '🔗';
+        const newCategory = document.getElementById('editLinkCategory').value;
+        if(!newName || !newUrl) {
+            showToast("名称和网址不能为空");
+            return;
+        }
+        let finalUrl = newUrl.startsWith('http') ? newUrl : 'https://' + newUrl;
+        await updateLinkById(currentEditingLinkId, newName, finalUrl, newIcon, newCategory);
+        closeModal('editLinkModal');
+        currentEditingLinkId = null;
+    };
 </script>
 </body>
 </html>
