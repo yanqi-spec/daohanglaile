@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes, maximum-scale=1.0">
-    <title>小七导航 · 云端同步 | 手机完美适配</title>
+    <title>小七导航 · 手机完美版</title>
     <style>
         * {
             margin: 0;
@@ -13,504 +13,451 @@
         }
 
         body {
-            background: linear-gradient(145deg, #eef2f9 0%, #e0e8f2 100%);
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f5f7fb;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
             padding: 12px;
             min-height: 100vh;
-            color: #1f2a44;
         }
 
-        .app-wrapper {
-            max-width: 600px;
+        /* 主容器 - 手机单列 */
+        .app {
+            max-width: 500px;
             margin: 0 auto;
             width: 100%;
         }
 
-        /* 玻璃卡片 - 手机优化 */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+        /* 卡片通用样式 */
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #eef2f6;
         }
 
-        /* 顶部栏 - 手机竖排优化 */
-        .top-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 12px 14px;
+        /* 顶部区域 */
+        .header {
+            background: white;
+            border-radius: 24px;
+            padding: 16px;
             margin-bottom: 12px;
-            border-radius: 20px;
+            text-align: center;
         }
         .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
+            font-size: 22px;
             font-weight: 700;
-            font-size: 1.2rem;
             background: linear-gradient(135deg, #1f5e6e, #2c8d9e);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            text-align: center;
+            margin-bottom: 12px;
         }
-        .search-section {
-            width: 100%;
-            background: white;
-            border-radius: 30px;
-            padding: 6px 6px 6px 16px;
+        
+        /* 搜索条 */
+        .search-box {
             display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid #e2edf2;
+            gap: 8px;
+            margin-bottom: 12px;
         }
-        .search-section input {
+        .search-box input {
             flex: 1;
-            border: none;
+            padding: 12px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 30px;
+            font-size: 15px;
             outline: none;
+            background: #f8fafc;
+        }
+        .search-box button {
+            background: #2c8d9e;
+            border: none;
+            color: white;
+            padding: 0 18px;
+            border-radius: 30px;
             font-size: 14px;
-            background: transparent;
-            padding: 10px 0;
-            min-width: 0;
-        }
-        .search-section button {
-            background: #2c8d9e;
-            border: none;
-            color: white;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 12px;
-            white-space: nowrap;
+            font-weight: 500;
             cursor: pointer;
         }
-        .user-area {
-            background: #ffffffcc;
-            padding: 6px 12px;
-            border-radius: 30px;
+        
+        /* 用户状态栏 */
+        .user-bar {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            font-size: 13px;
-            width: 100%;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 10px 16px;
+            border-radius: 40px;
         }
-        .auth-btn {
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        .login-btn {
             background: #2c8d9e;
             border: none;
             color: white;
-            padding: 6px 16px;
+            padding: 6px 20px;
             border-radius: 30px;
-            font-size: 12px;
+            font-size: 13px;
             cursor: pointer;
-            white-space: nowrap;
+        }
+        .logout-btn {
+            background: #e2e8f0;
+            border: none;
+            color: #475569;
+            padding: 6px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            cursor: pointer;
         }
 
-        /* 下班倒计时卡片 */
-        .countdown-card {
-            background: white;
-            border-radius: 18px;
-            padding: 12px 14px;
-            margin-bottom: 12px;
+        /* 下班倒计时 */
+        .countdown-row {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            border: 1px solid #e2edf2;
-        }
-        .countdown-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
         }
         .countdown-label {
-            font-weight: 600;
-            font-size: 13px;
             background: #eef2fa;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
         }
         #offworkDisplay {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             color: #2c6e7e;
         }
-        .time-picker {
+        .time-select {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             background: #f1f5f9;
             padding: 4px 12px;
             border-radius: 30px;
         }
-        .time-picker input {
+        .time-select input {
             border: none;
             background: transparent;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 14px;
             width: 70px;
             outline: none;
         }
-        .small-btn {
+
+        /* 区块标题 */
+        .section-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            padding-left: 8px;
+            border-left: 4px solid #2c8d9e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .add-btn {
             background: #eef2fa;
             border: none;
             padding: 6px 14px;
             border-radius: 30px;
             font-size: 12px;
             cursor: pointer;
-            transition: all 0.2s;
-            white-space: nowrap;
         }
 
-        /* 双栏手机版 - 竖排布局 */
-        .grid-2col {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        .info-panel {
-            background: white;
-            border-radius: 20px;
-            padding: 14px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            border: 1px solid #eef2fa;
-        }
-        .panel-header {
-            font-weight: 600;
-            font-size: 15px;
-            margin-bottom: 12px;
-            padding-left: 8px;
-            border-left: 3px solid #2c8d9e;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .search-highlight {
-            background-color: #ffeb9e;
-            color: #c45b00;
-            border-radius: 4px;
-            padding: 0 2px;
-        }
-        .link-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        .link-row {
+        /* 链接列表 - 大触摸区域 */
+        .link-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 8px 10px;
+            padding: 12px;
             background: #fafcff;
-            border-radius: 14px;
+            border-radius: 16px;
+            margin-bottom: 8px;
+            border: 1px solid #edf2f7;
             transition: 0.1s;
-            border: 1px solid transparent;
         }
-        .link-info {
+        .link-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             flex: 1;
             cursor: pointer;
-            text-decoration: none;
-            color: #1f2a44;
-            min-width: 0;
         }
         .link-icon {
-            font-size: 20px;
-            width: 32px;
-            flex-shrink: 0;
+            font-size: 24px;
+            width: 36px;
+            text-align: center;
         }
-        .link-name {
-            font-weight: 500;
-            font-size: 14px;
-            word-break: break-word;
+        .link-info {
             flex: 1;
         }
-        .click-count {
+        .link-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: #1e293b;
+        }
+        .click-badge {
             font-size: 11px;
             background: #eef2fa;
-            padding: 3px 8px;
+            padding: 3px 10px;
             border-radius: 20px;
             color: #4a627a;
-            white-space: nowrap;
-            flex-shrink: 0;
+            margin-top: 4px;
+            display: inline-block;
         }
         .link-actions {
             display: flex;
-            gap: 6px;
-            flex-shrink: 0;
+            gap: 12px;
         }
         .icon-btn {
             background: transparent;
             border: none;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
+            padding: 6px;
+            color: #94a3b8;
+        }
+        .icon-btn:active {
             opacity: 0.6;
-            padding: 4px;
         }
-        .add-link-bar {
+
+        /* 添加链接区域 */
+        .add-link-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
             margin-top: 12px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
         }
-        .add-link-bar input {
+        .add-link-row input {
             flex: 1;
-            padding: 10px 14px;
+            padding: 12px 14px;
+            border: 1px solid #e2e8f0;
             border-radius: 30px;
-            border: 1px solid #cfdfe8;
+            font-size: 14px;
+            background: #f8fafc;
+        }
+        .small-btn {
+            background: #eef2fa;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 30px;
             font-size: 13px;
-            min-width: 0;
+            cursor: pointer;
         }
-        .toolbar {
-            background: rgba(255, 255, 245, 0.95);
-            border-radius: 20px;
-            padding: 12px;
+        .primary-btn {
+            background: #2c8d9e;
+            color: white;
         }
-        .toolbar-buttons {
+
+        /* 自开发按钮组 */
+        .tools-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8px;
+            gap: 10px;
         }
-        .toolbar-buttons .small-btn {
+        .tool-btn {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 40px;
+            font-size: 14px;
+            cursor: pointer;
             flex: 1 0 auto;
             min-width: 70px;
             text-align: center;
         }
-        .footer {
-            text-align: center;
-            font-size: 10px;
-            margin-top: 16px;
-            color: #5e7a97;
-            padding: 8px;
+        .tool-btn:active {
+            background: #e2e8f0;
         }
 
-        /* 弹窗样式 - 手机优化 */
+        /* 弹窗 */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(4px);
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            padding: 16px;
         }
-        .modal-content {
+        .modal-box {
             background: white;
-            width: 100%;
+            width: 85%;
             max-width: 340px;
-            border-radius: 28px;
-            padding: 20px;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
-            animation: fadeInUp 0.2s ease;
+            border-radius: 32px;
+            padding: 24px 20px;
+            text-align: center;
         }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .modal-box h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
         }
-        .close-modal {
-            float: right;
-            font-size: 22px;
-            cursor: pointer;
-            color: #8aa0bc;
-        }
-        .search-clear {
-            background: #e2e8f0;
-            color: #2d3e5f;
-            margin-left: 4px;
-        }
-        .friendlink-modal .input-group {
-            margin: 16px 0;
-            text-align: left;
-        }
-        .friendlink-modal input {
+        .modal-box input {
             width: 100%;
             padding: 12px 16px;
+            border: 1px solid #e2e8f0;
             border-radius: 30px;
-            border: 1px solid #cfdfe8;
+            font-size: 15px;
+            margin: 12px 0;
             outline: none;
-            font-size: 14px;
         }
-        .friendlink-modal .modal-buttons {
+        .modal-buttons {
             display: flex;
             gap: 12px;
             justify-content: center;
             margin-top: 16px;
         }
-        .friendlink-modal .btn-confirm {
+        .modal-btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .modal-btn-confirm {
             background: #2c8d9e;
             color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 500;
-            cursor: pointer;
         }
-        .friendlink-modal .btn-cancel {
+        .modal-btn-cancel {
             background: #eef2fa;
-            color: #4a627a;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
+            color: #475569;
+        }
+        .close-x {
+            float: right;
+            font-size: 24px;
             cursor: pointer;
+            color: #94a3b8;
         }
-        .input-field {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 30px;
-            border: 1px solid #cfdfe8;
-            font-size: 14px;
-            margin-bottom: 12px;
-            outline: none;
-        }
-        .switch-link {
-            text-align: center;
-            margin-top: 12px;
+        .error-msg {
+            color: #e74c3c;
             font-size: 12px;
-            color: #2c8d9e;
-            cursor: pointer;
-        }
-        .error-text {
-            color: #d9534f;
-            font-size: 11px;
-            text-align: center;
             margin-top: 8px;
         }
-        h4 {
-            font-size: 18px;
-            margin-bottom: 16px;
+        .footer {
             text-align: center;
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 16px;
+            padding: 12px;
         }
     </style>
 </head>
 <body>
-<div class="app-wrapper">
-    <div class="top-bar glass-card">
+<div class="app">
+    <!-- 头部 -->
+    <div class="header">
         <div class="logo">🍃 小七导航 · 云端同步</div>
-        <div class="search-section">
-            <input type="text" id="globalSearchInput" placeholder="🔍 本页搜索 (链接/名称)...">
-            <button id="globalSearchBtn">搜索</button>
-            <button id="clearSearchBtn" class="search-clear" style="display:none;">✖️</button>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 搜索链接名称...">
+            <button id="searchBtn">搜索</button>
         </div>
-        <div class="user-area">
-            <span id="greetingText">👋 未登录</span>
-            <button id="authModalBtn" class="auth-btn">登录</button>
+        <div class="user-bar">
+            <span class="user-name" id="userNameDisplay">👋 未登录</span>
+            <button id="authActionBtn" class="login-btn">登录 / 注册</button>
         </div>
     </div>
 
-    <div class="countdown-card">
-        <div class="countdown-info">
+    <!-- 下班倒计时卡片 -->
+    <div class="card">
+        <div class="countdown-row">
             <span class="countdown-label">⏰ 下班倒计时</span>
             <span id="offworkDisplay">--:--:--</span>
-        </div>
-        <div class="time-picker">
-            <span>🕒 自定</span>
-            <input type="time" id="customOffworkTime" value="18:00">
-            <button id="setOffworkBtn" class="small-btn">设定</button>
+            <div class="time-select">
+                <input type="time" id="offworkTime" value="18:00">
+                <button id="setTimeBtn" class="small-btn">设定</button>
+            </div>
         </div>
     </div>
 
-    <div class="grid-2col">
-        <div class="info-panel">
-            <div class="panel-header">
-                <span>📌 常用办公套件</span>
-            </div>
-            <div class="link-list" id="defaultLinksList"></div>
+    <!-- 常用办公套件 -->
+    <div class="card">
+        <div class="section-title">
+            <span>📌 常用办公套件</span>
         </div>
+        <div id="defaultLinksContainer"></div>
+    </div>
 
-        <div class="info-panel">
-            <div class="panel-header">
-                <span>⭐ 我的自定义导航 (云端同步)</span>
-                <button class="small-btn" id="addCustomBtn">➕ 添加</button>
-            </div>
-            <div class="link-list" id="customLinksList"></div>
-            <div class="add-link-bar">
-                <input type="text" id="newLinkName" placeholder="名称">
-                <input type="text" id="newLinkUrl" placeholder="网址 https://">
-                <button class="small-btn" id="quickAddLinkBtn">快速添加</button>
-            </div>
-            <div style="font-size:10px; margin-top:8px; color:#6c819e;">✨ 登录后链接云端保存 | 点击次数同步</div>
+    <!-- 我的自定义导航 -->
+    <div class="card">
+        <div class="section-title">
+            <span>⭐ 我的自定义导航</span>
+            <button id="addCustomBtn" class="add-btn">➕ 添加</button>
         </div>
+        <div id="customLinksContainer"></div>
+        <div class="add-link-row">
+            <input type="text" id="newLinkName" placeholder="名称">
+            <input type="text" id="newLinkUrl" placeholder="网址 https://">
+            <button id="quickAddBtn" class="small-btn primary-btn">快速添加</button>
+        </div>
+        <div style="font-size: 11px; color: #94a3b8; margin-top: 8px;">✨ 登录后云端保存 | 点击自动计数</div>
     </div>
 
     <!-- 自开发工具箱 -->
-    <div class="toolbar glass-card">
-        <div class="panel-header" style="margin-bottom: 6px;">
-            <span>⚙️ 自开发</span>
-        </div>
-        <div class="toolbar-buttons">
-            <button class="small-btn" id="xiaoqijizhangBtn">💰 小七记账</button>
-            <button class="small-btn" id="xiaoqibijianBtn">📝 小七便签</button>
-            <button class="small-btn" id="saibodagongrenBtn">💻 赛博打工人</button>
-            <button class="small-btn" id="yanggeyangBtn">🐏 羊了个羊</button>
-            <button class="small-btn" id="randomPwdBtn">🔐 随机密码</button>
-            <button class="small-btn" id="copyUrlBtn">📋 复制地址</button>
-            <button class="small-btn" id="friendLinkBtn">🔗 友链申请</button>
+    <div class="card">
+        <div class="section-title">⚙️ 自开发</div>
+        <div class="tools-grid">
+            <button class="tool-btn" id="jizhangBtn">💰 小七记账</button>
+            <button class="tool-btn" id="bijianBtn">📝 小七便签</button>
+            <button class="tool-btn" id="saiboBtn">💻 赛博打工人</button>
+            <button class="tool-btn" id="yangBtn">🐏 羊了个羊</button>
+            <button class="tool-btn" id="randomPwdBtn">🔐 随机密码</button>
+            <button class="tool-btn" id="copyUrlBtn">📋 复制地址</button>
+            <button class="tool-btn" id="friendLinkBtn">🔗 友链申请</button>
         </div>
     </div>
+
     <div class="footer">
-        💡 云端驱动 | 昵称+密码登录 (英文数字) | 手机完美适配
+        💡 云端驱动 | 昵称+密码登录 (英文数字) | 触摸优化
     </div>
+</div>
 
-    <!-- 登录/注册模态框 -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModalBtn">&times;</span>
-            <div id="loginPanel">
-                <h4>登录小七导航</h4>
-                <input type="text" id="loginUsername" class="input-field" placeholder="昵称 (英文+数字)" autocomplete="off">
-                <input type="password" id="loginPassword" class="input-field" placeholder="密码 (英文+数字)">
-                <button class="auth-btn" id="doLoginBtn" style="width:100%;">登录</button>
-                <div class="switch-link" id="toRegisterBtn">注册新账号</div>
-                <div id="loginErrorMsg" class="error-text"></div>
+<!-- 登录弹窗 -->
+<div id="loginModal" class="modal">
+    <div class="modal-box">
+        <span class="close-x" id="closeLoginModal">&times;</span>
+        <div id="loginForm">
+            <h3>登录小七导航</h3>
+            <input type="text" id="loginNick" placeholder="昵称 (英文+数字)" autocomplete="off">
+            <input type="password" id="loginPwd" placeholder="密码 (英文+数字)">
+            <button id="doLoginBtn" class="modal-btn modal-btn-confirm" style="width:100%;">登录</button>
+            <div style="margin-top: 12px;">
+                <span id="switchToReg" style="color:#2c8d9e; font-size:13px; cursor:pointer;">没有账号？立即注册</span>
             </div>
-            <div id="registerPanel" style="display:none;">
-                <h4>注册账号</h4>
-                <input type="text" id="regUser" class="input-field" placeholder="昵称 (英文+数字, 2-20位)" autocomplete="off">
-                <input type="password" id="regPass" class="input-field" placeholder="密码 (英文+数字, 4-20位)">
-                <input type="password" id="regConfirm" class="input-field" placeholder="确认密码">
-                <button class="auth-btn" id="doRegisterBtn" style="width:100%;">注册并登录</button>
-                <div class="switch-link" id="toLoginBtn">← 返回登录</div>
-                <div id="regErrorMsg" class="error-text"></div>
+            <div id="loginError" class="error-msg"></div>
+        </div>
+        <div id="regForm" style="display:none;">
+            <h3>注册账号</h3>
+            <input type="text" id="regNick" placeholder="昵称 (英文+数字, 2-20位)" autocomplete="off">
+            <input type="password" id="regPwd" placeholder="密码 (英文+数字, 4-20位)">
+            <input type="password" id="regConfirmPwd" placeholder="确认密码">
+            <button id="doRegBtn" class="modal-btn modal-btn-confirm" style="width:100%;">注册并登录</button>
+            <div style="margin-top: 12px;">
+                <span id="switchToLogin" style="color:#2c8d9e; font-size:13px; cursor:pointer;">← 返回登录</span>
             </div>
+            <div id="regError" class="error-msg"></div>
         </div>
     </div>
+</div>
 
-    <!-- 友链申请弹窗 -->
-    <div id="friendLinkModal" class="modal friendlink-modal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeFriendModal">&times;</span>
-            <h3 style="margin-bottom: 8px; text-align:center;">🔗 友链申请</h3>
-            <p style="font-size: 12px; color: #6c819e; text-align:center; margin-bottom: 12px;">请输入您的网站地址</p>
-            <div class="input-group">
-                <input type="url" id="friendSiteUrl" placeholder="https://你的网站.com" autocomplete="off">
-            </div>
-            <div class="modal-buttons">
-                <button class="btn-confirm" id="confirmFriendBtn">提交申请</button>
-                <button class="btn-cancel" id="cancelFriendBtn">取消</button>
-            </div>
-            <div id="friendMsg" style="font-size:11px; margin-top: 12px; text-align:center; color:#2c8d9e;"></div>
+<!-- 友链申请弹窗 -->
+<div id="friendModal" class="modal">
+    <div class="modal-box">
+        <span class="close-x" id="closeFriendModal">&times;</span>
+        <h3>🔗 友链申请</h3>
+        <p style="font-size:13px; color:#6c819e;">请输入您的网站地址</p>
+        <input type="url" id="friendUrl" placeholder="https://你的网站.com">
+        <div class="modal-buttons">
+            <button id="submitFriendBtn" class="modal-btn modal-btn-confirm">提交</button>
+            <button id="cancelFriendBtn" class="modal-btn modal-btn-cancel">取消</button>
         </div>
+        <div id="friendMsg" class="error-msg" style="color:#2c8d9e;"></div>
     </div>
 </div>
 
@@ -522,189 +469,327 @@
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     
+    // 当前用户
     let currentUser = null;
-    let currentLinks = [];
+    let customLinks = [];
     
-    // 辅助函数
-    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
-    function escapeAttr(str) { return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;'); }
-    function isValidNickname(nick) { return /^[A-Za-z0-9]{2,20}$/.test(nick); }
-    function isValidPassword(pwd) { return /^[A-Za-z0-9]{4,20}$/.test(pwd); }
-    function hashPassword(pwd) { return btoa(unescape(encodeURIComponent(pwd + "xiaoqi_salt_2025"))); }
+    // 工具函数
+    function hashPwd(pwd) { return btoa(unescape(encodeURIComponent(pwd + "xiaoqi_salt"))); }
+    function isValidNick(n) { return /^[A-Za-z0-9]{2,20}$/.test(n); }
+    function isValidPwd(p) { return /^[A-Za-z0-9]{4,20}$/.test(p); }
+    function escapeHtml(s) { if(!s) return ''; return s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
     
-    // 数据库操作
-    async function loadUserLinks() {
+    // 加载用户自定义链接
+    async function loadCustomLinks() {
         if (!currentUser) return [];
-        const { data, error } = await supabase.from('user_links').select('*').eq('username', currentUser).order('id', { ascending: true });
+        const { data, error } = await supabase.from('user_links').select('*').eq('username', currentUser).order('id');
         if (error) return [];
         return data.map(item => ({ id: item.id, name: item.link_name, url: item.link_url, icon: item.link_icon || '🔗', clicks: item.click_count || 0 }));
     }
-    async function addLinkToDB(name, url, icon = '🔗') {
-        if (!currentUser) return null;
-        const { data, error } = await supabase.from('user_links').insert({ username: currentUser, link_name: name, link_url: url, link_icon: icon, click_count: 0 }).select();
-        return error ? null : data?.[0] || null;
+    
+    // 添加链接
+    async function addLink(name, url, icon = '🔗') {
+        if (!currentUser) { alert("请先登录"); return false; }
+        if (!url.startsWith('http')) url = 'https://' + url;
+        const { error } = await supabase.from('user_links').insert({ username: currentUser, link_name: name, link_url: url, link_icon: icon, click_count: 0 });
+        if (error) { alert("添加失败"); return false; }
+        await refreshCustomLinks();
+        return true;
     }
-    async function updateLinkInDB(id, updates) {
-        if (!currentUser) return false;
-        const { error } = await supabase.from('user_links').update({ link_name: updates.name, link_url: updates.url, link_icon: updates.icon, click_count: updates.clicks }).eq('id', id).eq('username', currentUser);
-        return !error;
+    
+    // 更新链接
+    async function updateLink(id, name, url, icon, clicks) {
+        await supabase.from('user_links').update({ link_name: name, link_url: url, link_icon: icon, click_count: clicks }).eq('id', id).eq('username', currentUser);
+        await refreshCustomLinks();
     }
-    async function deleteLinkFromDB(id) {
-        if (!currentUser) return false;
-        const { error } = await supabase.from('user_links').delete().eq('id', id).eq('username', currentUser);
-        return !error;
+    
+    // 删除链接
+    async function deleteLink(id) {
+        await supabase.from('user_links').delete().eq('id', id).eq('username', currentUser);
+        await refreshCustomLinks();
     }
-    async function incrementClickInDB(id, currentClicks) {
-        if (!currentUser) return;
+    
+    // 增加点击
+    async function incrementClick(id, currentClicks) {
         await supabase.from('user_links').update({ click_count: currentClicks + 1 }).eq('id', id).eq('username', currentUser);
-    }
-    async function refreshLinksAndRender() { currentLinks = await loadUserLinks(); renderCustomLinks(); }
-    
-    // 用户认证 (profiles 表)
-    async function signUp(nickname, password) {
-        if (!isValidNickname(nickname)) return { ok: false, msg: "昵称需为英文+数字，2-20位" };
-        if (!isValidPassword(password)) return { ok: false, msg: "密码需为英文+数字，4-20位" };
-        const { data: existing } = await supabase.from('profiles').select('nickname').eq('nickname', nickname).maybeSingle();
-        if (existing) return { ok: false, msg: "昵称已被注册" };
-        const { error } = await supabase.from('profiles').insert({ nickname, password_hash: hashPassword(password) });
-        if (error) return { ok: false, msg: "注册失败，请确保已创建 profiles 表" };
-        return { ok: true };
-    }
-    async function signIn(nickname, password) {
-        if (!isValidNickname(nickname)) return { ok: false, msg: "昵称格式错误" };
-        const { data, error } = await supabase.from('profiles').select('nickname, password_hash').eq('nickname', nickname).maybeSingle();
-        if (error || !data) return { ok: false, msg: "用户不存在" };
-        if (data.password_hash !== hashPassword(password)) return { ok: false, msg: "密码错误" };
-        return { ok: true, nickname: data.nickname };
-    }
-    function signOut() { currentUser = null; currentLinks = []; updateUserUI(); renderCustomLinks(); localStorage.removeItem("xiaoqi_session"); }
-    function saveSession(nickname) { localStorage.setItem("xiaoqi_session", nickname); }
-    async function initSession() {
-        const saved = localStorage.getItem("xiaoqi_session");
-        if (saved) {
-            const { data } = await supabase.from('profiles').select('nickname').eq('nickname', saved).maybeSingle();
-            if (data) { currentUser = saved; currentLinks = await loadUserLinks(); }
-        }
-        updateUserUI(); renderCustomLinks();
+        await refreshCustomLinks();
     }
     
+    async function refreshCustomLinks() {
+        customLinks = await loadCustomLinks();
+        renderCustomLinks();
+    }
+    
+    // 渲染自定义链接
     function renderCustomLinks() {
-        const container = document.getElementById("customLinksList");
+        const container = document.getElementById('customLinksContainer');
         if (!container) return;
-        if (!currentUser) { container.innerHTML = `<div style="padding:16px; text-align:center; color:#8aa0bc;">🔐 登录后即可同步自定义链接到云端</div>`; return; }
-        if (currentLinks.length === 0) { container.innerHTML = `<div style="padding:16px; text-align:center;">✨ 暂无链接，点击上方添加</div>`; return; }
-        container.innerHTML = "";
-        currentLinks.forEach(link => {
-            const row = document.createElement("div"); row.className = "link-row";
-            row.innerHTML = `
-                <div class="link-info" data-url="${escapeAttr(link.url)}" data-id="${link.id}" style="flex:1;">
-                    <div class="link-icon">${link.icon || '🔗'}</div>
-                    <div class="link-name">${escapeHtml(link.name)}</div>
-                    <span class="click-count">📊 ${link.clicks} 次</span>
+        if (!currentUser) {
+            container.innerHTML = '<div style="padding:16px; text-align:center; color:#94a3b8;">🔐 登录后即可保存自定义链接</div>';
+            return;
+        }
+        if (customLinks.length === 0) {
+            container.innerHTML = '<div style="padding:16px; text-align:center; color:#94a3b8;">✨ 暂无链接，点击上方添加</div>';
+            return;
+        }
+        container.innerHTML = '';
+        customLinks.forEach(link => {
+            const div = document.createElement('div');
+            div.className = 'link-item';
+            div.innerHTML = `
+                <div class="link-left" data-id="${link.id}" data-url="${escapeHtml(link.url)}">
+                    <div class="link-icon">${link.icon}</div>
+                    <div class="link-info">
+                        <div class="link-name">${escapeHtml(link.name)}</div>
+                        <span class="click-badge">📊 ${link.clicks} 次</span>
+                    </div>
                 </div>
                 <div class="link-actions">
-                    <button class="icon-btn edit-link" data-id="${link.id}" title="编辑">✏️</button>
-                    <button class="icon-btn delete-link" data-id="${link.id}" title="删除">🗑️</button>
+                    <button class="icon-btn edit-link" data-id="${link.id}" data-name="${escapeHtml(link.name)}" data-url="${escapeHtml(link.url)}" data-icon="${link.icon}">✏️</button>
+                    <button class="icon-btn delete-link" data-id="${link.id}">🗑️</button>
                 </div>
             `;
-            const infoDiv = row.querySelector(".link-info");
-            infoDiv.addEventListener("click", async (e) => { if (e.target.closest('.icon-btn')) return; await incrementClickInDB(link.id, link.clicks); link.clicks += 1; renderCustomLinks(); window.open(link.url, '_blank'); });
-            container.appendChild(row);
+            // 点击打开链接
+            div.querySelector('.link-left').addEventListener('click', async (e) => {
+                if (e.target.closest('.icon-btn')) return;
+                await incrementClick(link.id, link.clicks);
+                window.open(link.url, '_blank');
+            });
+            container.appendChild(div);
         });
-        document.querySelectorAll('.edit-link').forEach(btn => btn.addEventListener('click', async (e) => { e.stopPropagation(); const id = parseInt(btn.dataset.id); const link = currentLinks.find(l => l.id === id); if(!link) return; const newName = prompt("编辑名称", link.name); if(!newName) return; let newUrl = prompt("网址", link.url); if(!newUrl) return; if(!newUrl.startsWith('http')) newUrl = 'https://' + newUrl; const newIcon = prompt("图标(emoji)", link.icon || "🔗"); if(await updateLinkInDB(id, { name: newName.trim(), url: newUrl, icon: newIcon || "🔗", clicks: link.clicks })) await refreshLinksAndRender(); }));
-        document.querySelectorAll('.delete-link').forEach(btn => btn.addEventListener('click', async (e) => { e.stopPropagation(); const id = parseInt(btn.dataset.id); if(confirm("删除此链接？")) { await deleteLinkFromDB(id); await refreshLinksAndRender(); } }));
-        if (window.currentSearchKeyword) highlightContainer(container, window.currentSearchKeyword);
+        // 编辑
+        document.querySelectorAll('.edit-link').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.dataset.id);
+                const oldName = btn.dataset.name;
+                const oldUrl = btn.dataset.url;
+                const newName = prompt("编辑名称", oldName);
+                if (!newName) return;
+                let newUrl = prompt("编辑网址", oldUrl);
+                if (!newUrl) return;
+                if (!newUrl.startsWith('http')) newUrl = 'https://' + newUrl;
+                const newIcon = prompt("图标(emoji)", btn.dataset.icon || "🔗");
+                await updateLink(id, newName.trim(), newUrl, newIcon || "🔗", customLinks.find(l => l.id === id)?.clicks || 0);
+            });
+        });
+        // 删除
+        document.querySelectorAll('.delete-link').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                if (confirm("删除此链接？")) {
+                    await deleteLink(parseInt(btn.dataset.id));
+                }
+            });
+        });
+        // 高亮搜索
+        applySearchHighlight();
     }
     
-    async function addNewLink(name, url, icon = "📎") {
-        if (!currentUser) { alert("请先登录后再添加链接"); return false; }
-        if (!name || !url) return false;
-        if (!url.startsWith('http')) url = 'https://' + url;
-        const newRecord = await addLinkToDB(name.substring(0,30), url, icon);
-        if (newRecord) { await refreshLinksAndRender(); return true; }
-        return false;
-    }
-    
-    // 固定办公套件
-    const DEFAULT_CLICKS_KEY = "xiaoqi_default_clicks_v2";
-    function loadDefaultClicks() { const stored = localStorage.getItem(DEFAULT_CLICKS_KEY); return stored ? JSON.parse(stored) : {}; }
-    function saveDefaultClicks(map) { localStorage.setItem(DEFAULT_CLICKS_KEY, JSON.stringify(map)); }
-    function getDefaultClickCount(url) { return loadDefaultClicks()[url] || 0; }
-    function incrementDefaultClick(url) { const map = loadDefaultClicks(); map[url] = (map[url] || 0) + 1; saveDefaultClicks(map); renderDefaultLinks(); }
-    const defaultOffice = [
+    // 常用办公套件 (固定)
+    const defaultSites = [
         { name: "小七便签", url: "https://yanqi-spec.github.io/-/", icon: "📝" },
         { name: "秘塔搜索AI", url: "https://metaso.cn/", icon: "🤖" },
         { name: "在线PS", url: "https://ps.gaoding.com/#/", icon: "🎨" },
         { name: "Word转长图", url: "https://xpdf.cn/word-to-long-image", icon: "🖼️" },
         { name: "小说txt下载", url: "http://aiqu126.com/", icon: "📚" },
         { name: "表情包搜索", url: "https://emojis.click/zh", icon: "😆" },
-        { name: "在线PS (备用)", url: "https://ps.gaoding.com/#/", icon: "🎨" },
         { name: "无水印解析", url: "https://pv.vlogdownloader.com/", icon: "⬇️" }
     ];
+    const defaultClicksKey = "default_clicks";
+    function getDefaultClicks() { const s = localStorage.getItem(defaultClicksKey); return s ? JSON.parse(s) : {}; }
+    function saveDefaultClicks(map) { localStorage.setItem(defaultClicksKey, JSON.stringify(map)); }
+    function incrementDefaultClick(url) { const map = getDefaultClicks(); map[url] = (map[url] || 0) + 1; saveDefaultClicks(map); renderDefaultLinks(); }
     function renderDefaultLinks() {
-        const container = document.getElementById("defaultLinksList"); if (!container) return; container.innerHTML = "";
-        defaultOffice.forEach(site => {
-            const clickCount = getDefaultClickCount(site.url);
-            const div = document.createElement("div"); div.className = "link-row";
-            div.innerHTML = `<div class="link-info" data-url="${escapeAttr(site.url)}" style="flex:1;"><div class="link-icon">${site.icon}</div><div class="link-name">${escapeHtml(site.name)}</div><span class="click-count">点击 ${clickCount}</span></div>`;
-            div.querySelector(".link-info").addEventListener("click", (e) => { e.preventDefault(); incrementDefaultClick(site.url); window.open(site.url, '_blank'); });
+        const container = document.getElementById('defaultLinksContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        defaultSites.forEach(site => {
+            const clicks = getDefaultClicks()[site.url] || 0;
+            const div = document.createElement('div');
+            div.className = 'link-item';
+            div.innerHTML = `
+                <div class="link-left" data-url="${escapeHtml(site.url)}">
+                    <div class="link-icon">${site.icon}</div>
+                    <div class="link-info">
+                        <div class="link-name">${escapeHtml(site.name)}</div>
+                        <span class="click-badge">点击 ${clicks}</span>
+                    </div>
+                </div>
+            `;
+            div.querySelector('.link-left').addEventListener('click', (e) => {
+                incrementDefaultClick(site.url);
+                window.open(site.url, '_blank');
+            });
             container.appendChild(div);
         });
+        applySearchHighlight();
     }
     
     // 搜索高亮
-    function highlightContainer(container, keyword) { if (!keyword.trim()) return; const regex = new RegExp(`(${escapeRegex(keyword)})`, 'gi'); container.querySelectorAll('.link-name').forEach(span => { const txt = span.innerText; span.innerHTML = regex.test(txt) ? txt.replace(regex, `<span class="search-highlight">$1</span>`) : txt; }); }
-    function clearAllHighlights() { document.querySelectorAll('.link-name').forEach(span => span.innerHTML = span.innerText); }
-    function escapeRegex(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
-    function performPageSearch() { const kw = document.getElementById("globalSearchInput").value.trim(); const clearBtn = document.getElementById("clearSearchBtn"); if (!kw) { clearAllHighlights(); window.currentSearchKeyword = null; clearBtn.style.display = "none"; return; } window.currentSearchKeyword = kw; clearAllHighlights(); const left = document.getElementById("defaultLinksList"); const right = document.getElementById("customLinksList"); if (left) highlightContainer(left, kw); if (right && currentUser) highlightContainer(right, kw); clearBtn.style.display = "inline-flex"; }
-    function clearSearch() { document.getElementById("globalSearchInput").value = ""; clearAllHighlights(); window.currentSearchKeyword = null; document.getElementById("clearSearchBtn").style.display = "none"; }
+    let currentKeyword = '';
+    function applySearchHighlight() {
+        if (!currentKeyword) return;
+        const regex = new RegExp(`(${currentKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        document.querySelectorAll('.link-name').forEach(el => {
+            const original = el.innerText;
+            if (regex.test(original)) {
+                el.innerHTML = original.replace(regex, `<span style="background:#ffeb9e; color:#c45b00; border-radius:4px; padding:0 2px;">$1</span>`);
+            } else {
+                el.innerHTML = original;
+            }
+        });
+    }
+    function clearHighlight() {
+        document.querySelectorAll('.link-name').forEach(el => { el.innerHTML = el.innerText; });
+    }
+    function searchLinks() {
+        const kw = document.getElementById('searchInput').value.trim();
+        currentKeyword = kw;
+        if (!kw) {
+            clearHighlight();
+            return;
+        }
+        clearHighlight();
+        applySearchHighlight();
+    }
     
     // 下班倒计时
-    let offworkTargetHour = 18, offworkTargetMinute = 0;
-    function updateOffworkTimer() { const now = new Date(); const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), offworkTargetHour, offworkTargetMinute, 0); const el = document.getElementById("offworkDisplay"); if (now >= target) el.innerText = "🎉 已下班！"; else { const diff = target - now; el.innerText = `${Math.floor(diff/3600000).toString().padStart(2,'0')}:${Math.floor((diff%3600000)/60000).toString().padStart(2,'0')}:${Math.floor((diff%60000)/1000).toString().padStart(2,'0')}`; } }
-    function setOffworkFromInput() { const [h,m] = document.getElementById("customOffworkTime").value.split(":").map(Number); offworkTargetHour = h; offworkTargetMinute = m; updateOffworkTimer(); alert(`下班时间已设为 ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`); }
+    let offHour = 18, offMin = 0;
+    function updateCountdown() {
+        const now = new Date();
+        const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), offHour, offMin, 0);
+        const el = document.getElementById('offworkDisplay');
+        if (now >= target) {
+            el.innerText = '🎉 已下班！';
+        } else {
+            const diff = target - now;
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            el.innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+    }
+    function setOffwork() {
+        const val = document.getElementById('offworkTime').value;
+        const [h, m] = val.split(':').map(Number);
+        offHour = h; offMin = m;
+        updateCountdown();
+        alert(`下班时间设为 ${h}:${m}`);
+    }
     
+    // 用户认证 (profiles 表)
+    async function signUp(nick, pwd) {
+        if (!isValidNick(nick)) return { ok: false, msg: "昵称需为英文+数字，2-20位" };
+        if (!isValidPwd(pwd)) return { ok: false, msg: "密码需为英文+数字，4-20位" };
+        const { data: exist } = await supabase.from('profiles').select('nickname').eq('nickname', nick).maybeSingle();
+        if (exist) return { ok: false, msg: "昵称已存在" };
+        const { error } = await supabase.from('profiles').insert({ nickname: nick, password_hash: hashPwd(pwd) });
+        if (error) return { ok: false, msg: "注册失败，请确保已创建 profiles 表" };
+        return { ok: true };
+    }
+    async function signIn(nick, pwd) {
+        const { data, error } = await supabase.from('profiles').select('nickname, password_hash').eq('nickname', nick).maybeSingle();
+        if (error || !data) return { ok: false, msg: "用户不存在" };
+        if (data.password_hash !== hashPwd(pwd)) return { ok: false, msg: "密码错误" };
+        return { ok: true };
+    }
+    function updateUserUI() {
+        const nameSpan = document.getElementById('userNameDisplay');
+        const btn = document.getElementById('authActionBtn');
+        if (currentUser) {
+            nameSpan.innerHTML = `👤 ${currentUser}`;
+            btn.innerHTML = '退出登录';
+            btn.className = 'logout-btn';
+        } else {
+            nameSpan.innerHTML = '👋 未登录';
+            btn.innerHTML = '登录 / 注册';
+            btn.className = 'login-btn';
+        }
+    }
+    
+    // 登录登出
+    async function doLogin(nick, pwd) {
+        const res = await signIn(nick, pwd);
+        if (res.ok) {
+            currentUser = nick;
+            localStorage.setItem('xiaoqi_user', nick);
+            updateUserUI();
+            closeLoginModal();
+            await refreshCustomLinks();
+        } else {
+            document.getElementById('loginError').innerText = res.msg;
+        }
+    }
+    async function doReg(nick, pwd, confirm) {
+        if (pwd !== confirm) { document.getElementById('regError').innerText = "两次密码不一致"; return; }
+        const res = await signUp(nick, pwd);
+        if (res.ok) {
+            alert("注册成功！请登录");
+            switchToLogin();
+        } else {
+            document.getElementById('regError').innerText = res.msg;
+        }
+    }
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem('xiaoqi_user');
+        customLinks = [];
+        updateUserUI();
+        renderCustomLinks();
+    }
+    async function initSession() {
+        const saved = localStorage.getItem('xiaoqi_user');
+        if (saved) {
+            const { data } = await supabase.from('profiles').select('nickname').eq('nickname', saved).maybeSingle();
+            if (data) {
+                currentUser = saved;
+                customLinks = await loadCustomLinks();
+            }
+        }
+        updateUserUI();
+        renderCustomLinks();
+    }
+    
+    // 弹窗控制
+    const loginModal = document.getElementById('loginModal');
+    const friendModal = document.getElementById('friendModal');
+    function openLoginModal() { loginModal.style.display = 'flex'; }
+    function closeLoginModal() { loginModal.style.display = 'none'; document.getElementById('loginError').innerText = ''; document.getElementById('regError').innerText = ''; }
+    function openFriendModal() { friendModal.style.display = 'flex'; }
+    function closeFriendModal() { friendModal.style.display = 'none'; document.getElementById('friendUrl').value = ''; document.getElementById('friendMsg').innerText = ''; }
+    function switchToReg() { document.getElementById('loginForm').style.display = 'none'; document.getElementById('regForm').style.display = 'block'; }
+    function switchToLogin() { document.getElementById('loginForm').style.display = 'block'; document.getElementById('regForm').style.display = 'none'; }
+    
+    // 事件绑定
+    document.getElementById('authActionBtn').onclick = () => { if (currentUser) logout(); else openLoginModal(); };
+    document.getElementById('closeLoginModal').onclick = closeLoginModal;
+    document.getElementById('switchToReg').onclick = switchToReg;
+    document.getElementById('switchToLogin').onclick = switchToLogin;
+    document.getElementById('doLoginBtn').onclick = () => { const n = document.getElementById('loginNick').value.trim(); const p = document.getElementById('loginPwd').value; doLogin(n, p); };
+    document.getElementById('doRegBtn').onclick = () => { const n = document.getElementById('regNick').value.trim(); const p = document.getElementById('regPwd').value; const c = document.getElementById('regConfirmPwd').value; doReg(n, p, c); };
+    document.getElementById('addCustomBtn').onclick = () => { if(!currentUser){ alert("请先登录"); return; } let n = prompt("链接名称"); if(n){ let u = prompt("网址"); if(u) addLink(n, u); } };
+    document.getElementById('quickAddBtn').onclick = () => { if(!currentUser){ alert("请先登录"); return; } let n = document.getElementById('newLinkName').value.trim(); let u = document.getElementById('newLinkUrl').value.trim(); if(n && u) { addLink(n, u); document.getElementById('newLinkName').value = ''; document.getElementById('newLinkUrl').value = ''; } else alert("填写完整"); };
+    document.getElementById('searchBtn').onclick = searchLinks;
+    document.getElementById('searchInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') searchLinks(); });
+    document.getElementById('setTimeBtn').onclick = setOffwork;
     // 自开发按钮
-    document.getElementById("xiaoqijizhangBtn").onclick = () => window.open("https://yanqi-spec.github.io/jizhang/", "_blank");
-    document.getElementById("xiaoqibijianBtn").onclick = () => window.open("https://yanqi-spec.github.io/-/", "_blank");
-    document.getElementById("saibodagongrenBtn").onclick = () => window.open("https://yanqi-spec.github.io/myns/", "_blank");
-    document.getElementById("yanggeyangBtn").onclick = () => window.open("https://yanqi-spec.github.io/yanglegeyang/", "_blank");
-    document.getElementById("randomPwdBtn").onclick = () => { let pwd = Math.random().toString(36).slice(-10); navigator.clipboard.writeText(pwd); alert(`密码: ${pwd}`); };
-    document.getElementById("copyUrlBtn").onclick = () => { navigator.clipboard.writeText(window.location.href); alert("已复制地址"); };
+    document.getElementById('jizhangBtn').onclick = () => window.open('https://yanqi-spec.github.io/jizhang/', '_blank');
+    document.getElementById('bijianBtn').onclick = () => window.open('https://yanqi-spec.github.io/-/', '_blank');
+    document.getElementById('saiboBtn').onclick = () => window.open('https://yanqi-spec.github.io/myns/', '_blank');
+    document.getElementById('yangBtn').onclick = () => window.open('https://yanqi-spec.github.io/yanglegeyang/', '_blank');
+    document.getElementById('randomPwdBtn').onclick = () => { let pwd = Math.random().toString(36).slice(-10); navigator.clipboard.writeText(pwd); alert(`密码: ${pwd}`); };
+    document.getElementById('copyUrlBtn').onclick = () => { navigator.clipboard.writeText(window.location.href); alert("已复制地址"); };
+    document.getElementById('friendLinkBtn').onclick = openFriendModal;
+    document.getElementById('closeFriendModal').onclick = closeFriendModal;
+    document.getElementById('cancelFriendBtn').onclick = closeFriendModal;
+    document.getElementById('submitFriendBtn').onclick = () => { const url = document.getElementById('friendUrl').value.trim(); if(!url) { document.getElementById('friendMsg').innerText = "请输入网址"; return; } if(!url.startsWith('http')) { document.getElementById('friendMsg').innerText = "请以 http:// 或 https:// 开头"; return; } document.getElementById('friendMsg').innerHTML = "✅ 申请已提交！"; setTimeout(() => closeFriendModal(), 1500); };
+    window.onclick = (e) => { if(e.target === loginModal) closeLoginModal(); if(e.target === friendModal) closeFriendModal(); };
     
-    // 友链弹窗
-    const friendModal = document.getElementById("friendLinkModal");
-    function openFriendModal() { friendModal.style.display = "flex"; }
-    function closeFriendModal() { friendModal.style.display = "none"; document.getElementById("friendSiteUrl").value = ""; document.getElementById("friendMsg").innerText = ""; }
-    document.getElementById("friendLinkBtn").onclick = openFriendModal;
-    document.getElementById("closeFriendModal").onclick = closeFriendModal;
-    document.getElementById("cancelFriendBtn").onclick = closeFriendModal;
-    document.getElementById("confirmFriendBtn").onclick = () => { const url = document.getElementById("friendSiteUrl").value.trim(); if (!url) { document.getElementById("friendMsg").innerText = "请输入网站地址"; return; } if (!url.startsWith('http')) { document.getElementById("friendMsg").innerText = "请输入完整网址"; return; } document.getElementById("friendMsg").innerHTML = "✅ 申请已提交！"; document.getElementById("confirmFriendBtn").disabled = true; setTimeout(() => { closeFriendModal(); document.getElementById("confirmFriendBtn").disabled = false; }, 1500); };
-    
-    // 登录UI
-    function updateUserUI() { const greet = document.getElementById("greetingText"); const btn = document.getElementById("authModalBtn"); if (currentUser) { greet.innerText = `👤 ${currentUser}`; btn.innerText = "退出"; } else { greet.innerText = "👋 未登录"; btn.innerText = "登录"; } renderCustomLinks(); }
-    const authModal = document.getElementById("authModal");
-    function openAuthModal() { authModal.style.display = "flex"; }
-    function closeAuthModal() { authModal.style.display = "none"; document.getElementById("loginErrorMsg").innerText = ""; document.getElementById("regErrorMsg").innerText = ""; }
-    document.getElementById("authModalBtn").onclick = () => { if (currentUser) signOut(); else openAuthModal(); };
-    document.getElementById("closeModalBtn").onclick = closeAuthModal;
-    document.getElementById("toRegisterBtn").onclick = () => { document.getElementById("loginPanel").style.display = "none"; document.getElementById("registerPanel").style.display = "block"; };
-    document.getElementById("toLoginBtn").onclick = () => { document.getElementById("loginPanel").style.display = "block"; document.getElementById("registerPanel").style.display = "none"; };
-    document.getElementById("doLoginBtn").onclick = async () => { const nick = document.getElementById("loginUsername").value.trim(); const pwd = document.getElementById("loginPassword").value; const res = await signIn(nick, pwd); if (res.ok) { currentUser = nick; saveSession(nick); currentLinks = await loadUserLinks(); closeAuthModal(); document.getElementById("loginUsername").value = ""; document.getElementById("loginPassword").value = ""; updateUserUI(); renderCustomLinks(); } else { document.getElementById("loginErrorMsg").innerText = res.msg; } };
-    document.getElementById("doRegisterBtn").onclick = async () => { const nick = document.getElementById("regUser").value.trim(); const pwd = document.getElementById("regPass").value; const confirm = document.getElementById("regConfirm").value; if (pwd !== confirm) { document.getElementById("regErrorMsg").innerText = "两次密码不一致"; return; } const res = await signUp(nick, pwd); if (res.ok) { alert("注册成功！请登录"); document.getElementById("loginPanel").style.display = "block"; document.getElementById("registerPanel").style.display = "none"; document.getElementById("regUser").value = ""; document.getElementById("regPass").value = ""; document.getElementById("regConfirm").value = ""; document.getElementById("regErrorMsg").innerText = ""; } else { document.getElementById("regErrorMsg").innerText = res.msg; } };
-    window.onclick = (e) => { if (e.target === authModal) closeAuthModal(); if (e.target === friendModal) closeFriendModal(); };
-    
-    // 其他绑定
-    document.getElementById("globalSearchBtn").onclick = performPageSearch;
-    document.getElementById("clearSearchBtn").onclick = clearSearch;
-    document.getElementById("globalSearchInput").addEventListener("keypress", (e) => { if(e.key === 'Enter') performPageSearch(); });
-    document.getElementById("addCustomBtn").onclick = () => { if (!currentUser) { alert("请先登录"); return; } let n = prompt("名称"); if(n){ let u = prompt("网址"); if(u) addNewLink(n,u); } };
-    document.getElementById("quickAddLinkBtn").onclick = () => { if (!currentUser) { alert("请先登录"); return; } let name = document.getElementById("newLinkName").value.trim(); let url = document.getElementById("newLinkUrl").value.trim(); if(name && url) { addNewLink(name, url); document.getElementById("newLinkName").value = ""; document.getElementById("newLinkUrl").value = ""; } else alert("填写完整"); };
-    document.getElementById("setOffworkBtn").onclick = setOffworkFromInput;
-    
+    // 启动
     renderDefaultLinks();
-    updateOffworkTimer();
-    setInterval(updateOffworkTimer, 1000);
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
     initSession();
 </script>
 </body>
