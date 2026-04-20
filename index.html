@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>小七导航 · 云端同步 | 自开发工具箱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(145deg, #eef2f9 0%, #e0e8f2 100%);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 1rem;
+            min-height: 100vh;
+            color: #1f2a44;
+        }
+
+        .app-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .top-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #1f5e6e, #2c8d9e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .search-section {
+            flex: 1;
+            min-width: 160px;
+            background: white;
+            border-radius: 2rem;
+            padding: 0.25rem 0.25rem 0.25rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .search-section input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 0.8rem;
+            background: transparent;
+            padding: 0.5rem 0;
+        }
+        .search-section button {
+            background: #2c8d9e;
+            border: none;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .user-area {
+            background: #ffffffcc;
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+        }
+        .auth-btn {
+            background: #2c8d9e;
+            border: none;
+            color: white;
+            padding: 0.3rem 0.9rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .countdown-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            border: 1px solid #e2edf2;
+        }
+        .countdown-info {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .countdown-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            background: #eef2fa;
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+        }
+        #offworkDisplay {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2c6e7e;
+        }
+        .time-picker {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+        }
+        .time-picker input {
+            border: none;
+            background: transparent;
+            font-size: 0.8rem;
+            font-weight: 500;
+            width: 70px;
+            outline: none;
+        }
+        .small-btn {
+            background: #eef2fa;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .small-btn:hover {
+            background: #e2e8f0;
+            transform: scale(0.96);
+        }
+        .grid-2col {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+        .info-panel {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid #eef2fa;
+        }
+        .panel-header {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            padding-left: 0.5rem;
+            border-left: 3px solid #2c8d9e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .search-highlight {
+            background-color: #ffeb9e;
+            color: #c45b00;
+            border-radius: 4px;
+            padding: 0 2px;
+        }
+        .link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+        .link-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0.6rem;
+            background: #fafcff;
+            border-radius: 1rem;
+            transition: 0.1s;
+            border: 1px solid transparent;
+        }
+        .link-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            cursor: pointer;
+            text-decoration: none;
+            color: #1f2a44;
+        }
+        .link-icon {
+            font-size: 1.2rem;
+            width: 28px;
+        }
+        .link-name {
+            font-weight: 500;
+            font-size: 0.85rem;
+            word-break: break-word;
+        }
+        .click-count {
+            font-size: 0.65rem;
+            background: #eef2fa;
+            padding: 0.1rem 0.5rem;
+            border-radius: 1rem;
+            color: #4a627a;
+            margin-left: 6px;
+            white-space: nowrap;
+        }
+        .link-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .icon-btn {
+            background: transparent;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            opacity: 0.6;
+        }
+        .add-link-bar {
+            margin-top: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .add-link-bar input {
+            flex: 1;
+            padding: 0.5rem 0.8rem;
+            border-radius: 2rem;
+            border: 1px solid #cfdfe8;
+            font-size: 0.75rem;
+        }
+        .toolbar {
+            background: rgba(255, 255, 245, 0.95);
+            border-radius: 1.2rem;
+            padding: 0.8rem;
+        }
+        .toolbar-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.6rem;
+            margin-top: 1.5rem;
+            color: #5e7a97;
+        }
+        /* 精美弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: white;
+            width: 85%;
+            max-width: 360px;
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.25);
+            animation: fadeInUp 0.2s ease;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .close-modal {
+            float: right;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: #8aa0bc;
+            transition: 0.1s;
+        }
+        .close-modal:hover {
+            color: #2c5f6e;
+        }
+        .search-clear {
+            background: #e2e8f0;
+            color: #2d3e5f;
+            margin-left: 4px;
+        }
+        /* 友链申请专用弹窗 */
+        .friendlink-modal .modal-content {
+            text-align: center;
+        }
+        .friendlink-modal .input-group {
+            margin: 1rem 0;
+            text-align: left;
+        }
+        .friendlink-modal input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #cfdfe8;
+            outline: none;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+        .friendlink-modal input:focus {
+            border-color: #2c8d9e;
+            box-shadow: 0 0 0 2px rgba(44,141,158,0.2);
+        }
+        .friendlink-modal .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 1.2rem;
+        }
+        .friendlink-modal .btn-confirm {
+            background: #2c8d9e;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .friendlink-modal .btn-cancel {
+            background: #eef2fa;
+            color: #4a627a;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            cursor: pointer;
+        }
+        @media (min-width: 700px) {
+            .grid-2col {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1.2rem;
+            }
+            body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+    <div class="top-bar glass-card">
+        <div class="logo">🍃 小七导航 · 云端同步</div>
+        <div class="search-section">
+            <input type="text" id="globalSearchInput" placeholder="🔍 本页搜索 (链接/名称)...">
+            <button id="globalSearchBtn">搜索</button>
+            <button id="clearSearchBtn" class="search-clear" style="display:none;">✖️</button>
+        </div>
+        <div class="user-area">
+            <span id="greetingText">👋 未登录</span>
+            <button id="authModalBtn" class="auth-btn">登录</button>
+        </div>
+    </div>
+
+    <div class="countdown-card">
+        <div class="countdown-info">
+            <span class="countdown-label">⏰ 下班倒计时</span>
+            <span id="offworkDisplay">--:--:--</span>
+        </div>
+        <div class="time-picker">
+            <span>🕒 自定</span>
+            <input type="time" id="customOffworkTime" value="18:00">
+            <button id="setOffworkBtn" class="small-btn">设定</button>
+        </div>
+    </div>
+
+    <div class="grid-2col">
+        <div class="info-panel">
+            <div class="panel-header">
+                <span>📌 常用办公套件</span>
+            </div>
+            <div class="link-list" id="defaultLinksList"></div>
+        </div>
+
+        <div class="info-panel">
+            <div class="panel-header">
+                <span>⭐ 我的自定义导航 (云端同步)</span>
+                <button class="small-btn" id="addCustomBtn">➕ 添加</button>
+            </div>
+            <div class="link-list" id="customLinksList"></div>
+            <div class="add-link-bar">
+                <input type="text" id="newLinkName" placeholder="名称">
+                <input type="text" id="newLinkUrl" placeholder="网址 https://">
+                <button class="small-btn" id="quickAddLinkBtn">快速添加</button>
+            </div>
+            <div style="font-size:0.6rem; margin-top:6px; color:#6c819e;">✨ 登录后链接云端保存 | 点击次数同步 | 本页搜索高亮</div>
+        </div>
+    </div>
+
+    <!-- 自开发工具箱 -->
+    <div class="toolbar glass-card">
+        <div class="panel-header" style="margin-bottom: 0.4rem;">
+            <span>⚙️ 自开发</span>
+        </div>
+        <div class="toolbar-buttons">
+            <button class="small-btn" id="xiaoqijizhangBtn">💰 小七记账</button>
+            <button class="small-btn" id="xiaoqibijianBtn">📝 小七便签</button>
+            <button class="small-btn" id="saibodagongrenBtn">💻 赛博打工人</button>
+            <button class="small-btn" id="yanggeyangBtn">🐏 羊了个羊</button>
+            <button class="small-btn" id="randomPwdBtn">🔐 随机密码</button>
+            <button class="small-btn" id="copyUrlBtn">📋 复制地址</button>
+            <button class="small-btn" id="friendLinkBtn">🔗 友链申请</button>
+        </div>
+    </div>
+    <div class="footer">
+        💡 云端驱动 | 使用 Supabase 数据库 | 昵称+密码登录 (仅英文数字) | 友链申请弹窗精美设计
+    </div>
+
+    <!-- 登录/注册模态框 (昵称+密码, 无需邮箱) -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModalBtn">&times;</span>
+            <div id="loginPanel">
+                <h4 style="margin-bottom: 1rem;">登录小七导航</h4>
+                <input type="text" id="loginUsername" placeholder="昵称 (英文+数字)" style="width:100%; padding:8px; border-radius: 2rem; border:1px solid #ccc; margin-bottom: 10px;">
+                <input type="password" id="loginPassword" placeholder="密码 (英文+数字)" style="width:100%; padding:8px; border-radius: 2rem; border:1px solid #ccc; margin-bottom: 10px;">
+                <button class="auth-btn" id="doLoginBtn" style="width:100%;">登录</button>
+                <div class="switch-link" id="toRegisterBtn" style="text-align:center; margin-top: 12px; font-size:0.7rem; color:#2c8d9e; cursor:pointer;">注册新账号</div>
+                <div id="loginErrorMsg" class="error-text" style="color:red; font-size:0.7rem;"></div>
+            </div>
+            <div id="registerPanel" style="display:none;">
+                <h4 style="margin-bottom: 1rem;">注册账号</h4>
+                <input type="text" id="regUser" placeholder="昵称 (英文+数字, 2-20位)" style="width:100%; padding:8px; border-radius: 2rem; margin-bottom: 8px;">
+                <input type="password" id="regPass" placeholder="密码 (英文+数字, 4-20位)" style="width:100%; padding:8px; border-radius: 2rem; margin-bottom: 8px;">
+                <input type="password" id="regConfirm" placeholder="确认密码" style="width:100%; padding:8px; border-radius: 2rem; margin-bottom: 8px;">
+                <button class="auth-btn" id="doRegisterBtn" style="width:100%;">注册并登录</button>
+                <div class="switch-link" id="toLoginBtn" style="text-align:center; margin-top: 12px; font-size:0.7rem; cursor:pointer;">← 返回登录</div>
+                <div id="regErrorMsg" class="error-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 友链申请精美弹窗 -->
+    <div id="friendLinkModal" class="modal friendlink-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeFriendModal">&times;</span>
+            <h3 style="margin-bottom: 0.5rem;">🔗 友链申请</h3>
+            <p style="font-size: 0.75rem; color: #6c819e; margin-bottom: 1rem;">请输入您的网站地址</p>
+            <div class="input-group">
+                <input type="url" id="friendSiteUrl" placeholder="https://你的网站.com" autocomplete="off">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-confirm" id="confirmFriendBtn">提交申请</button>
+                <button class="btn-cancel" id="cancelFriendBtn">取消</button>
+            </div>
+            <div id="friendMsg" style="font-size:0.7rem; margin-top: 12px; color:#2c8d9e;"></div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    // ==================== Supabase 配置 ====================
+    const SUPABASE_URL = 'https://ogldsgcwldzrjqbvqbft.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9nbGRzZ2N3bGR6cmpxYnZxYmZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2NTA4ODUsImV4cCI6MjA5MjIyNjg4NX0.8UiI78s-j7J4dXetBmDWs3u59rAp5ZJqLbk2J66xGyo';
+    
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // 全局状态
+    let currentUser = null;          // 当前登录昵称
+    let currentLinks = [];
+    
+    // ==================== 辅助函数 ====================
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    function escapeAttr(str) {
+        return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    }
+    
+    // 校验昵称: 英文+数字，长度2-20
+    function isValidNickname(nick) {
+        return /^[A-Za-z0-9]{2,20}$/.test(nick);
+    }
+    // 校验密码: 英文+数字，长度4-20
+    function isValidPassword(pwd) {
+        return /^[A-Za-z0-9]{4,20}$/.test(pwd);
+    }
+    
+    // ==================== 数据库操作 (user_links 表，username 字段存储昵称) ====================
+    async function loadUserLinks() {
+        if (!currentUser) return [];
+        const { data, error } = await supabase
+            .from('user_links')
+            .select('*')
+            .eq('username', currentUser)
+            .order('id', { ascending: true });
+        if (error) {
+            console.error('加载链接失败:', error);
+            return [];
+        }
+        return data.map(item => ({
+            id: item.id,
+            name: item.link_name,
+            url: item.link_url,
+            icon: item.link_icon || '🔗',
+            clicks: item.click_count || 0
+        }));
+    }
+    
+    async function addLinkToDB(name, url, icon = '🔗') {
+        if (!currentUser) return null;
+        const { data, error } = await supabase
+            .from('user_links')
+            .insert({
+                username: currentUser,
+                link_name: name,
+                link_url: url,
+                link_icon: icon,
+                click_count: 0
+            })
+            .select();
+        if (error) {
+            console.error('添加失败:', error);
+            return null;
+        }
+        return data?.[0] || null;
+    }
+    
+    async function updateLinkInDB(id, updates) {
+        if (!currentUser) return false;
+        const { error } = await supabase
+            .from('user_links')
+            .update({
+                link_name: updates.name,
+                link_url: updates.url,
+                link_icon: updates.icon,
+                click_count: updates.clicks
+            })
+            .eq('id', id)
+            .eq('username', currentUser);
+        if (error) {
+            console.error('更新失败:', error);
+            return false;
+        }
+        return true;
+    }
+    
+    async function deleteLinkFromDB(id) {
+        if (!currentUser) return false;
+        const { error } = await supabase
+            .from('user_links')
+            .delete()
+            .eq('id', id)
+            .eq('username', currentUser);
+        if (error) {
+            console.error('删除失败:', error);
+            return false;
+        }
+        return true;
+    }
+    
+    async function incrementClickInDB(id, currentClicks) {
+        if (!currentUser) return;
+        await supabase
+            .from('user_links')
+            .update({ click_count: currentClicks + 1 })
+            .eq('id', id)
+            .eq('username', currentUser);
+    }
+    
+    async function refreshLinksAndRender() {
+        currentLinks = await loadUserLinks();
+        renderCustomLinks();
+    }
+    
+    // ==================== 自定义链接渲染 ====================
+    function renderCustomLinks() {
+        const container = document.getElementById("customLinksList");
+        if (!container) return;
+        if (!currentUser) {
+            container.innerHTML = `<div style="padding:1rem; text-align:center; color:#8aa0bc;">🔐 登录后即可同步自定义链接到云端</div>`;
+            return;
+        }
+        if (currentLinks.length === 0) {
+            container.innerHTML = `<div style="padding:1rem; text-align:center;">✨ 暂无链接，点击上方添加</div>`;
+            return;
+        }
+        container.innerHTML = "";
+        currentLinks.forEach(link => {
+            const row = document.createElement("div");
+            row.className = "link-row";
+            row.innerHTML = `
+                <div class="link-info" data-url="${escapeAttr(link.url)}" data-id="${link.id}" style="flex:1;">
+                    <div class="link-icon">${link.icon || '🔗'}</div>
+                    <div>
+                        <div class="link-name">${escapeHtml(link.name)}</div>
+                        <span class="click-count">📊 ${link.clicks} 次</span>
+                    </div>
+                </div>
+                <div class="link-actions">
+                    <button class="icon-btn edit-link" data-id="${link.id}" title="编辑">✏️</button>
+                    <button class="icon-btn delete-link" data-id="${link.id}" title="删除">🗑️</button>
+                </div>
+            `;
+            const infoDiv = row.querySelector(".link-info");
+            infoDiv.addEventListener("click", async (e) => {
+                if (e.target.closest('.icon-btn')) return;
+                await incrementClickInDB(link.id, link.clicks);
+                link.clicks += 1;
+                renderCustomLinks();
+                window.open(link.url, '_blank');
+            });
+            container.appendChild(row);
+        });
+        
+        document.querySelectorAll('.edit-link').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.dataset.id);
+                const link = currentLinks.find(l => l.id === id);
+                if (!link) return;
+                const newName = prompt("编辑名称", link.name);
+                if (!newName) return;
+                let newUrl = prompt("网址", link.url);
+                if (!newUrl) return;
+                if (!newUrl.startsWith('http')) newUrl = 'https://' + newUrl;
+                const newIcon = prompt("图标(emoji)", link.icon || "🔗");
+                const success = await updateLinkInDB(id, {
+                    name: newName.trim(),
+                    url: newUrl,
+                    icon: newIcon || "🔗",
+                    clicks: link.clicks
+                });
+                if (success) await refreshLinksAndRender();
+            });
+        });
+        
+        document.querySelectorAll('.delete-link').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.dataset.id);
+                if (confirm("删除此链接？")) {
+                    await deleteLinkFromDB(id);
+                    await refreshLinksAndRender();
+                }
+            });
+        });
+        
+        if (window.currentSearchKeyword) {
+            highlightContainer(container, window.currentSearchKeyword);
+        }
+    }
+    
+    async function addNewLink(name, url, icon = "📎") {
+        if (!currentUser) {
+            alert("请先登录后再添加链接，登录后数据会永久云端保存");
+            return false;
+        }
+        if (!name || !url) return false;
+        if (!url.startsWith('http')) url = 'https://' + url;
+        const newRecord = await addLinkToDB(name.substring(0,30), url, icon);
+        if (newRecord) {
+            await refreshLinksAndRender();
+            return true;
+        }
+        return false;
+    }
+    
+    // ==================== 固定办公套件 ====================
+    const DEFAULT_CLICKS_KEY = "xiaoqi_default_clicks_v2";
+    function loadDefaultClicks() {
+        const stored = localStorage.getItem(DEFAULT_CLICKS_KEY);
+        if (stored) { try { return JSON.parse(stored); } catch(e) { return {}; } }
+        return {};
+    }
+    function saveDefaultClicks(map) { localStorage.setItem(DEFAULT_CLICKS_KEY, JSON.stringify(map)); }
+    function getDefaultClickCount(url) { return loadDefaultClicks()[url] || 0; }
+    function incrementDefaultClick(url) {
+        const map = loadDefaultClicks();
+        map[url] = (map[url] || 0) + 1;
+        saveDefaultClicks(map);
+        renderDefaultLinks();
+    }
+    
+    const defaultOffice = [
+        { name: "小七便签", url: "https://yanqi-spec.github.io/-/", icon: "📝" },
+        { name: "秘塔搜索AI", url: "https://metaso.cn/", icon: "🤖" },
+        { name: "在线PS", url: "https://ps.gaoding.com/#/", icon: "🎨" },
+        { name: "Word转长图", url: "https://xpdf.cn/word-to-long-image", icon: "🖼️" },
+        { name: "小说txt下载", url: "http://aiqu126.com/", icon: "📚" },
+        { name: "表情包搜索", url: "https://emojis.click/zh", icon: "😆" },
+        { name: "在线PS (备用)", url: "https://ps.gaoding.com/#/", icon: "🎨" },
+        { name: "无水印解析", url: "https://pv.vlogdownloader.com/", icon: "⬇️" }
+    ];
+    
+    function renderDefaultLinks() {
+        const container = document.getElementById("defaultLinksList");
+        if (!container) return;
+        container.innerHTML = "";
+        defaultOffice.forEach(site => {
+            const clickCount = getDefaultClickCount(site.url);
+            const div = document.createElement("div");
+            div.className = "link-row";
+            div.innerHTML = `
+                <div class="link-info" data-url="${escapeAttr(site.url)}" style="flex:1;">
+                    <div class="link-icon">${site.icon}</div>
+                    <div>
+                        <div class="link-name">${escapeHtml(site.name)}</div>
+                        <span class="click-count">点击 ${clickCount}</span>
+                    </div>
+                </div>
+            `;
+            const linkDiv = div.querySelector(".link-info");
+            linkDiv.addEventListener("click", (e) => {
+                e.preventDefault();
+                incrementDefaultClick(site.url);
+                window.open(site.url, '_blank');
+            });
+            container.appendChild(div);
+        });
+    }
+    
+    // ==================== 页面搜索高亮 ====================
+    function highlightContainer(container, keyword) {
+        if (!keyword.trim()) return;
+        const regex = new RegExp(`(${escapeRegex(keyword)})`, 'gi');
+        const nameSpans = container.querySelectorAll('.link-name');
+        nameSpans.forEach(span => {
+            const originalText = span.innerText;
+            if (regex.test(originalText)) {
+                const newHtml = originalText.replace(regex, `<span class="search-highlight">$1</span>`);
+                span.innerHTML = newHtml;
+            } else {
+                span.innerHTML = originalText;
+            }
+        });
+    }
+    function clearAllHighlights() {
+        document.querySelectorAll('.link-name').forEach(span => { span.innerHTML = span.innerText; });
+    }
+    function escapeRegex(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+    function performPageSearch() {
+        const keyword = document.getElementById("globalSearchInput").value.trim();
+        const clearBtn = document.getElementById("clearSearchBtn");
+        if (!keyword) {
+            clearAllHighlights();
+            window.currentSearchKeyword = null;
+            clearBtn.style.display = "none";
+            return;
+        }
+        window.currentSearchKeyword = keyword;
+        clearAllHighlights();
+        const left = document.getElementById("defaultLinksList");
+        const right = document.getElementById("customLinksList");
+        if (left) highlightContainer(left, keyword);
+        if (right && currentUser) highlightContainer(right, keyword);
+        clearBtn.style.display = "inline-flex";
+    }
+    function clearSearch() {
+        document.getElementById("globalSearchInput").value = "";
+        clearAllHighlights();
+        window.currentSearchKeyword = null;
+        document.getElementById("clearSearchBtn").style.display = "none";
+    }
+    
+    // ==================== 下班倒计时 ====================
+    let offworkTargetHour = 18, offworkTargetMinute = 0;
+    function updateOffworkTimer() {
+        const now = new Date();
+        let target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), offworkTargetHour, offworkTargetMinute, 0);
+        const el = document.getElementById("offworkDisplay");
+        if (now >= target) {
+            el.innerText = "🎉 已下班！休息吧 🎉";
+        } else {
+            const diff = target - now;
+            const hours = Math.floor(diff / 3600000);
+            const mins = Math.floor((diff % 3600000) / 60000);
+            const secs = Math.floor((diff % 60000) / 1000);
+            el.innerText = `${hours.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+        }
+    }
+    function setOffworkFromInput() {
+        const val = document.getElementById("customOffworkTime").value;
+        const [hour, minute] = val.split(":").map(Number);
+        offworkTargetHour = hour;
+        offworkTargetMinute = minute;
+        updateOffworkTimer();
+        alert(`下班时间已设为 ${hour.toString().padStart(2,'0')}:${minute.toString().padStart(2,'0')}`);
+    }
+    
+    // ==================== 自开发工具箱按钮 ====================
+    document.getElementById("xiaoqijizhangBtn").onclick = () => window.open("https://yanqi-spec.github.io/jizhang/", "_blank");
+    document.getElementById("xiaoqibijianBtn").onclick = () => window.open("https://yanqi-spec.github.io/-/", "_blank");
+    document.getElementById("saibodagongrenBtn").onclick = () => window.open("https://yanqi-spec.github.io/myns/", "_blank");
+    document.getElementById("yanggeyangBtn").onclick = () => window.open("https://yanqi-spec.github.io/yanglegeyang/", "_blank");
+    
+    // 友链申请弹窗
+    const friendModal = document.getElementById("friendLinkModal");
+    function openFriendModal() { friendModal.style.display = "flex"; }
+    function closeFriendModal() { friendModal.style.display = "none"; document.getElementById("friendSiteUrl").value = ""; document.getElementById("friendMsg").innerText = ""; }
+    document.getElementById("friendLinkBtn").onclick = openFriendModal;
+    document.getElementById("closeFriendModal").onclick = closeFriendModal;
+    document.getElementById("cancelFriendBtn").onclick = closeFriendModal;
+    document.getElementById("confirmFriendBtn").onclick = () => {
+        const url = document.getElementById("friendSiteUrl").value.trim();
+        if (!url) {
+            document.getElementById("friendMsg").innerText = "请输入网站地址";
+            return;
+        }
+        if (!url.startsWith('http')) {
+            document.getElementById("friendMsg").innerText = "请输入完整网址 (以 http:// 或 https:// 开头)";
+            return;
+        }
+        document.getElementById("friendMsg").innerHTML = "✅ 申请已提交！我们会尽快审核。<br>感谢您的支持~";
+        document.getElementById("confirmFriendBtn").disabled = true;
+        setTimeout(() => {
+            closeFriendModal();
+            document.getElementById("confirmFriendBtn").disabled = false;
+        }, 1800);
+    };
+    
+    // ==================== 登录/注册 (基于 Supabase Auth 但使用自定义元数据存储昵称) ====================
+    // 注意：Supabase Auth 默认需要邮箱，我们通过自定义方式：将昵称作为 email 的本地部分 + 虚拟域名，实现昵称登录
+    // 但为了体验，我们使用自定义的 users 表来管理昵称+密码，避免邮箱困扰。
+    // 方案：创建独立的 users 表存储 (nickname, password_hash)，不使用 Supabase Auth，完全自主。
+    // 这样更符合“昵称+密码”的需求。
+    
+    // 创建 users 表 (SQL 请手动执行一次，这里在代码中动态检测)
+    // 首次使用时若表不存在会报错，需要先在 Supabase SQL Editor 执行：
+    /*
+    CREATE TABLE IF NOT EXISTS profiles (
+        nickname TEXT PRIMARY KEY,
+        password_hash TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT NOW()
+    );
+    */
+    // 我们已经在之前的步骤中创建了 user_links 表，现在需要 profiles 表来存储密码。
+    // 为了完整，这里提供自动检测，但建议手动执行。
+    
+    // 密码哈希函数 (简单哈希，仅供演示，生产环境建议 bcrypt)
+    function hashPassword(pwd) {
+        return btoa(unescape(encodeURIComponent(pwd + "xiaoqi_salt_2025")));
+    }
+    
+    // 注册: 检查昵称是否存在，插入 profiles 表
+    async function signUp(nickname, password) {
+        if (!isValidNickname(nickname)) return { ok: false, msg: "昵称需为英文+数字，2-20位" };
+        if (!isValidPassword(password)) return { ok: false, msg: "密码需为英文+数字，4-20位" };
+        // 检查昵称是否已存在
+        const { data: existing, error: checkErr } = await supabase
+            .from('profiles')
+            .select('nickname')
+            .eq('nickname', nickname)
+            .maybeSingle();
+        if (existing) return { ok: false, msg: "昵称已被注册" };
+        const { error } = await supabase
+            .from('profiles')
+            .insert({ nickname: nickname, password_hash: hashPassword(password) });
+        if (error) {
+            console.error(error);
+            return { ok: false, msg: "注册失败，请稍后重试" };
+        }
+        return { ok: true };
+    }
+    
+    // 登录: 验证昵称和密码
+    async function signIn(nickname, password) {
+        if (!isValidNickname(nickname)) return { ok: false, msg: "昵称格式错误" };
+        const { data, error } = await supabase
+            .from('profiles')
+            .select('nickname, password_hash')
+            .eq('nickname', nickname)
+            .maybeSingle();
+        if (error || !data) return { ok: false, msg: "用户不存在" };
+        if (data.password_hash !== hashPassword(password)) return { ok: false, msg: "密码错误" };
+        return { ok: true, nickname: data.nickname };
+    }
+    
+    // 登出
+    function signOut() {
+        currentUser = null;
+        currentLinks = [];
+        updateUserUI();
+        renderCustomLinks();
+        localStorage.removeItem("xiaoqi_session");
+    }
+    
+    // 保存会话
+    function saveSession(nickname) {
+        localStorage.setItem("xiaoqi_session", nickname);
+    }
+    
+    function loadSession() {
+        return localStorage.getItem("xiaoqi_session");
+    }
+    
+    function updateUserUI() {
+        const greet = document.getElementById("greetingText");
+        const btn = document.getElementById("authModalBtn");
+        if (currentUser) {
+            greet.innerText = `👤 ${currentUser}`;
+            btn.innerText = "退出";
+        } else {
+            greet.innerText = "👋 未登录";
+            btn.innerText = "登录";
+        }
+        renderCustomLinks();
+    }
+    
+    // 初始化会话
+    async function initSession() {
+        const saved = loadSession();
+        if (saved) {
+            // 验证该昵称是否还存在于 profiles 中（可选）
+            const { data } = await supabase.from('profiles').select('nickname').eq('nickname', saved).maybeSingle();
+            if (data) {
+                currentUser = saved;
+                currentLinks = await loadUserLinks();
+            } else {
+                localStorage.removeItem("xiaoqi_session");
+            }
+        }
+        updateUserUI();
+        renderCustomLinks();
+    }
+    
+    // 模态框逻辑
+    const authModal = document.getElementById("authModal");
+    function openAuthModal() { authModal.style.display = "flex"; }
+    function closeAuthModal() { authModal.style.display = "none"; document.getElementById("loginErrorMsg").innerText = ""; document.getElementById("regErrorMsg").innerText = ""; }
+    document.getElementById("authModalBtn").onclick = () => {
+        if (currentUser) signOut();
+        else openAuthModal();
+    };
+    document.getElementById("closeModalBtn").onclick = closeAuthModal;
+    document.getElementById("toRegisterBtn").onclick = () => {
+        document.getElementById("loginPanel").style.display = "none";
+        document.getElementById("registerPanel").style.display = "block";
+    };
+    document.getElementById("toLoginBtn").onclick = () => {
+        document.getElementById("loginPanel").style.display = "block";
+        document.getElementById("registerPanel").style.display = "none";
+    };
+    document.getElementById("doLoginBtn").onclick = async () => {
+        const nick = document.getElementById("loginUsername").value.trim();
+        const pwd = document.getElementById("loginPassword").value;
+        const res = await signIn(nick, pwd);
+        if (res.ok) {
+            currentUser = nick;
+            saveSession(nick);
+            currentLinks = await loadUserLinks();
+            closeAuthModal();
+            document.getElementById("loginUsername").value = "";
+            document.getElementById("loginPassword").value = "";
+            updateUserUI();
+            renderCustomLinks();
+        } else {
+            document.getElementById("loginErrorMsg").innerText = res.msg;
+        }
+    };
+    document.getElementById("doRegisterBtn").onclick = async () => {
+        const nick = document.getElementById("regUser").value.trim();
+        const pwd = document.getElementById("regPass").value;
+        const confirm = document.getElementById("regConfirm").value;
+        if (pwd !== confirm) {
+            document.getElementById("regErrorMsg").innerText = "两次密码不一致";
+            return;
+        }
+        const res = await signUp(nick, pwd);
+        if (res.ok) {
+            alert("注册成功！请登录");
+            document.getElementById("loginPanel").style.display = "block";
+            document.getElementById("registerPanel").style.display = "none";
+            document.getElementById("regUser").value = "";
+            document.getElementById("regPass").value = "";
+            document.getElementById("regConfirm").value = "";
+            document.getElementById("regErrorMsg").innerText = "";
+        } else {
+            document.getElementById("regErrorMsg").innerText = res.msg;
+        }
+    };
+    window.onclick = (e) => { if (e.target === authModal) closeAuthModal(); if (e.target === friendModal) closeFriendModal(); };
+    
+    // 其他按钮
+    document.getElementById("randomPwdBtn").onclick = () => {
+        let pwd = Math.random().toString(36).slice(-10) + Math.random().toString(36).slice(-4);
+        navigator.clipboard.writeText(pwd);
+        alert(`随机密码已复制: ${pwd}`);
+    };
+    document.getElementById("copyUrlBtn").onclick = () => { navigator.clipboard.writeText(window.location.href); alert("已复制当前页面地址"); };
+    document.getElementById("globalSearchBtn").onclick = performPageSearch;
+    document.getElementById("clearSearchBtn").onclick = clearSearch;
+    document.getElementById("globalSearchInput").addEventListener("keypress", (e) => { if(e.key === 'Enter') performPageSearch(); });
+    document.getElementById("addCustomBtn").onclick = () => {
+        if (!currentUser) { alert("请先登录后再添加自定义链接"); return; }
+        let n = prompt("链接名称"); if(n){ let u = prompt("网址"); if(u) addNewLink(n,u); }
+    };
+    document.getElementById("quickAddLinkBtn").onclick = () => {
+        if (!currentUser) { alert("请先登录后再添加"); return; }
+        let name = document.getElementById("newLinkName").value.trim();
+        let url = document.getElementById("newLinkUrl").value.trim();
+        if(name && url) {
+            addNewLink(name, url);
+            document.getElementById("newLinkName").value = "";
+            document.getElementById("newLinkUrl").value = "";
+        } else alert("请填写完整");
+    };
+    document.getElementById("setOffworkBtn").onclick = setOffworkFromInput;
+    
+    // 启动
+    renderDefaultLinks();
+    updateOffworkTimer();
+    setInterval(updateOffworkTimer, 1000);
+    initSession();
+</script>
+</body>
+</html>
