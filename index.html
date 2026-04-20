@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>小七导航 · 云端同步 | 自开发工具箱</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes, maximum-scale=1.0">
+    <title>小七导航 · 云端同步 | 手机完美适配</title>
     <style>
         * {
             margin: 0;
@@ -15,36 +15,39 @@
         body {
             background: linear-gradient(145deg, #eef2f9 0%, #e0e8f2 100%);
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            padding: 1rem;
+            padding: 12px;
             min-height: 100vh;
             color: #1f2a44;
         }
 
         .app-wrapper {
-            max-width: 800px;
+            max-width: 600px;
             margin: 0 auto;
+            width: 100%;
         }
 
+        /* 玻璃卡片 - 手机优化 */
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 1.5rem;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
+        /* 顶部栏 - 手机竖排优化 */
         .top-bar {
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.8rem;
-            padding: 0.8rem 1.2rem;
-            margin-bottom: 1.2rem;
+            flex-direction: column;
+            gap: 10px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border-radius: 20px;
         }
         .logo {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             font-weight: 700;
             font-size: 1.2rem;
@@ -52,95 +55,102 @@
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
+            text-align: center;
         }
         .search-section {
-            flex: 1;
-            min-width: 160px;
+            width: 100%;
             background: white;
-            border-radius: 2rem;
-            padding: 0.25rem 0.25rem 0.25rem 1rem;
+            border-radius: 30px;
+            padding: 6px 6px 6px 16px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
+            border: 1px solid #e2edf2;
         }
         .search-section input {
             flex: 1;
             border: none;
             outline: none;
-            font-size: 0.8rem;
+            font-size: 14px;
             background: transparent;
-            padding: 0.5rem 0;
+            padding: 10px 0;
+            min-width: 0;
         }
         .search-section button {
             background: #2c8d9e;
             border: none;
             color: white;
-            padding: 0.3rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.7rem;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
             white-space: nowrap;
             cursor: pointer;
         }
         .user-area {
             background: #ffffffcc;
-            padding: 0.2rem 0.8rem;
-            border-radius: 2rem;
+            padding: 6px 12px;
+            border-radius: 30px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.75rem;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 13px;
+            width: 100%;
         }
         .auth-btn {
             background: #2c8d9e;
             border: none;
             color: white;
-            padding: 0.3rem 0.9rem;
-            border-radius: 2rem;
-            font-size: 0.7rem;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 12px;
             cursor: pointer;
+            white-space: nowrap;
         }
+
+        /* 下班倒计时卡片 */
         .countdown-card {
             background: white;
-            border-radius: 1.2rem;
-            padding: 0.8rem 1rem;
-            margin-bottom: 1.2rem;
+            border-radius: 18px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 0.8rem;
+            gap: 10px;
             border: 1px solid #e2edf2;
         }
         .countdown-info {
             display: flex;
-            align-items: baseline;
-            gap: 12px;
+            align-items: center;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .countdown-label {
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 13px;
             background: #eef2fa;
-            padding: 0.2rem 0.8rem;
-            border-radius: 2rem;
+            padding: 5px 12px;
+            border-radius: 30px;
         }
         #offworkDisplay {
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-size: 14px;
+            font-weight: 600;
             color: #2c6e7e;
         }
         .time-picker {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             background: #f1f5f9;
-            padding: 0.2rem 0.8rem;
-            border-radius: 2rem;
+            padding: 4px 12px;
+            border-radius: 30px;
         }
         .time-picker input {
             border: none;
             background: transparent;
-            font-size: 0.8rem;
+            font-size: 13px;
             font-weight: 500;
             width: 70px;
             outline: none;
@@ -148,40 +158,39 @@
         .small-btn {
             background: #eef2fa;
             border: none;
-            padding: 0.3rem 0.8rem;
-            border-radius: 2rem;
-            font-size: 0.7rem;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
         }
-        .small-btn:hover {
-            background: #e2e8f0;
-            transform: scale(0.96);
-        }
+
+        /* 双栏手机版 - 竖排布局 */
         .grid-2col {
             display: flex;
             flex-direction: column;
-            gap: 1.2rem;
-            margin-bottom: 1.2rem;
+            gap: 12px;
+            margin-bottom: 12px;
         }
         .info-panel {
             background: white;
-            border-radius: 1.5rem;
-            padding: 1rem;
+            border-radius: 20px;
+            padding: 14px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.02);
             border: 1px solid #eef2fa;
         }
         .panel-header {
             font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 0.8rem;
-            padding-left: 0.5rem;
+            font-size: 15px;
+            margin-bottom: 12px;
+            padding-left: 8px;
             border-left: 3px solid #2c8d9e;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 8px;
         }
         .search-highlight {
             background-color: #ffeb9e;
@@ -192,17 +201,17 @@
         .link-list {
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
-            max-height: 450px;
+            gap: 8px;
+            max-height: 400px;
             overflow-y: auto;
         }
         .link-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.5rem 0.6rem;
+            padding: 8px 10px;
             background: #fafcff;
-            border-radius: 1rem;
+            border-radius: 14px;
             transition: 0.1s;
             border: 1px solid transparent;
         }
@@ -214,86 +223,99 @@
             cursor: pointer;
             text-decoration: none;
             color: #1f2a44;
+            min-width: 0;
         }
         .link-icon {
-            font-size: 1.2rem;
-            width: 28px;
+            font-size: 20px;
+            width: 32px;
+            flex-shrink: 0;
         }
         .link-name {
             font-weight: 500;
-            font-size: 0.85rem;
+            font-size: 14px;
             word-break: break-word;
+            flex: 1;
         }
         .click-count {
-            font-size: 0.65rem;
+            font-size: 11px;
             background: #eef2fa;
-            padding: 0.1rem 0.5rem;
-            border-radius: 1rem;
+            padding: 3px 8px;
+            border-radius: 20px;
             color: #4a627a;
-            margin-left: 6px;
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .link-actions {
             display: flex;
             gap: 6px;
-            align-items: center;
+            flex-shrink: 0;
         }
         .icon-btn {
             background: transparent;
             border: none;
-            font-size: 1rem;
+            font-size: 16px;
             cursor: pointer;
             opacity: 0.6;
+            padding: 4px;
         }
         .add-link-bar {
-            margin-top: 0.8rem;
+            margin-top: 12px;
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 8px;
         }
         .add-link-bar input {
             flex: 1;
-            padding: 0.5rem 0.8rem;
-            border-radius: 2rem;
+            padding: 10px 14px;
+            border-radius: 30px;
             border: 1px solid #cfdfe8;
-            font-size: 0.75rem;
+            font-size: 13px;
+            min-width: 0;
         }
         .toolbar {
             background: rgba(255, 255, 245, 0.95);
-            border-radius: 1.2rem;
-            padding: 0.8rem;
+            border-radius: 20px;
+            padding: 12px;
         }
         .toolbar-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 6px;
+            margin-top: 8px;
+        }
+        .toolbar-buttons .small-btn {
+            flex: 1 0 auto;
+            min-width: 70px;
+            text-align: center;
         }
         .footer {
             text-align: center;
-            font-size: 0.6rem;
-            margin-top: 1.5rem;
+            font-size: 10px;
+            margin-top: 16px;
             color: #5e7a97;
+            padding: 8px;
         }
-        /* 精美弹窗样式 */
+
+        /* 弹窗样式 - 手机优化 */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(6px);
             align-items: center;
             justify-content: center;
             z-index: 1000;
+            padding: 16px;
         }
         .modal-content {
             background: white;
-            width: 85%;
-            max-width: 360px;
-            border-radius: 1.8rem;
-            padding: 1.5rem;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.25);
+            width: 100%;
+            max-width: 340px;
+            border-radius: 28px;
+            padding: 20px;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
             animation: fadeInUp 0.2s ease;
         }
         @keyframes fadeInUp {
@@ -308,52 +330,39 @@
         }
         .close-modal {
             float: right;
-            font-size: 1.4rem;
+            font-size: 22px;
             cursor: pointer;
             color: #8aa0bc;
-            transition: 0.1s;
-        }
-        .close-modal:hover {
-            color: #2c5f6e;
         }
         .search-clear {
             background: #e2e8f0;
             color: #2d3e5f;
             margin-left: 4px;
         }
-        /* 友链申请专用弹窗 */
-        .friendlink-modal .modal-content {
-            text-align: center;
-        }
         .friendlink-modal .input-group {
-            margin: 1rem 0;
+            margin: 16px 0;
             text-align: left;
         }
         .friendlink-modal input {
             width: 100%;
-            padding: 0.7rem 1rem;
-            border-radius: 2rem;
+            padding: 12px 16px;
+            border-radius: 30px;
             border: 1px solid #cfdfe8;
             outline: none;
-            font-size: 0.85rem;
-            transition: 0.2s;
-        }
-        .friendlink-modal input:focus {
-            border-color: #2c8d9e;
-            box-shadow: 0 0 0 2px rgba(44,141,158,0.2);
+            font-size: 14px;
         }
         .friendlink-modal .modal-buttons {
             display: flex;
             gap: 12px;
             justify-content: center;
-            margin-top: 1.2rem;
+            margin-top: 16px;
         }
         .friendlink-modal .btn-confirm {
             background: #2c8d9e;
             color: white;
             border: none;
-            padding: 0.5rem 1.2rem;
-            border-radius: 2rem;
+            padding: 10px 20px;
+            border-radius: 30px;
             font-weight: 500;
             cursor: pointer;
         }
@@ -361,19 +370,36 @@
             background: #eef2fa;
             color: #4a627a;
             border: none;
-            padding: 0.5rem 1.2rem;
-            border-radius: 2rem;
+            padding: 10px 20px;
+            border-radius: 30px;
             cursor: pointer;
         }
-        @media (min-width: 700px) {
-            .grid-2col {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 1.2rem;
-            }
-            body {
-                padding: 1.5rem;
-            }
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 30px;
+            border: 1px solid #cfdfe8;
+            font-size: 14px;
+            margin-bottom: 12px;
+            outline: none;
+        }
+        .switch-link {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #2c8d9e;
+            cursor: pointer;
+        }
+        .error-text {
+            color: #d9534f;
+            font-size: 11px;
+            text-align: center;
+            margin-top: 8px;
+        }
+        h4 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            text-align: center;
         }
     </style>
 </head>
@@ -423,13 +449,13 @@
                 <input type="text" id="newLinkUrl" placeholder="网址 https://">
                 <button class="small-btn" id="quickAddLinkBtn">快速添加</button>
             </div>
-            <div style="font-size:0.6rem; margin-top:6px; color:#6c819e;">✨ 登录后链接云端保存 | 点击次数同步 | 本页搜索高亮</div>
+            <div style="font-size:10px; margin-top:8px; color:#6c819e;">✨ 登录后链接云端保存 | 点击次数同步</div>
         </div>
     </div>
 
     <!-- 自开发工具箱 -->
     <div class="toolbar glass-card">
-        <div class="panel-header" style="margin-bottom: 0.4rem;">
+        <div class="panel-header" style="margin-bottom: 6px;">
             <span>⚙️ 自开发</span>
         </div>
         <div class="toolbar-buttons">
@@ -443,39 +469,39 @@
         </div>
     </div>
     <div class="footer">
-        💡 云端驱动 | 使用 Supabase 数据库 | 昵称+密码登录 (仅英文数字) | 友链申请弹窗精美设计
+        💡 云端驱动 | 昵称+密码登录 (英文数字) | 手机完美适配
     </div>
 
-    <!-- 登录/注册模态框 (昵称+密码, 无需邮箱) -->
+    <!-- 登录/注册模态框 -->
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" id="closeModalBtn">&times;</span>
             <div id="loginPanel">
-                <h4 style="margin-bottom: 1rem;">登录小七导航</h4>
-                <input type="text" id="loginUsername" placeholder="昵称 (英文+数字)" style="width:100%; padding:8px; border-radius: 2rem; border:1px solid #ccc; margin-bottom: 10px;">
-                <input type="password" id="loginPassword" placeholder="密码 (英文+数字)" style="width:100%; padding:8px; border-radius: 2rem; border:1px solid #ccc; margin-bottom: 10px;">
+                <h4>登录小七导航</h4>
+                <input type="text" id="loginUsername" class="input-field" placeholder="昵称 (英文+数字)" autocomplete="off">
+                <input type="password" id="loginPassword" class="input-field" placeholder="密码 (英文+数字)">
                 <button class="auth-btn" id="doLoginBtn" style="width:100%;">登录</button>
-                <div class="switch-link" id="toRegisterBtn" style="text-align:center; margin-top: 12px; font-size:0.7rem; color:#2c8d9e; cursor:pointer;">注册新账号</div>
-                <div id="loginErrorMsg" class="error-text" style="color:red; font-size:0.7rem;"></div>
+                <div class="switch-link" id="toRegisterBtn">注册新账号</div>
+                <div id="loginErrorMsg" class="error-text"></div>
             </div>
             <div id="registerPanel" style="display:none;">
-                <h4 style="margin-bottom: 1rem;">注册账号</h4>
-                <input type="text" id="regUser" placeholder="昵称 (英文+数字, 2-20位)" style="width:100%; padding:8px; border-radius: 2rem; margin-bottom: 8px;">
-                <input type="password" id="regPass" placeholder="密码 (英文+数字, 4-20位)" style="width:100%; padding:8px; border-radius: 2rem; margin-bottom: 8px;">
-                <input type="password" id="regConfirm" placeholder="确认密码" style="width:100%; padding:8px; border-radius: 2rem; margin-bottom: 8px;">
+                <h4>注册账号</h4>
+                <input type="text" id="regUser" class="input-field" placeholder="昵称 (英文+数字, 2-20位)" autocomplete="off">
+                <input type="password" id="regPass" class="input-field" placeholder="密码 (英文+数字, 4-20位)">
+                <input type="password" id="regConfirm" class="input-field" placeholder="确认密码">
                 <button class="auth-btn" id="doRegisterBtn" style="width:100%;">注册并登录</button>
-                <div class="switch-link" id="toLoginBtn" style="text-align:center; margin-top: 12px; font-size:0.7rem; cursor:pointer;">← 返回登录</div>
+                <div class="switch-link" id="toLoginBtn">← 返回登录</div>
                 <div id="regErrorMsg" class="error-text"></div>
             </div>
         </div>
     </div>
 
-    <!-- 友链申请精美弹窗 -->
+    <!-- 友链申请弹窗 -->
     <div id="friendLinkModal" class="modal friendlink-modal">
         <div class="modal-content">
             <span class="close-modal" id="closeFriendModal">&times;</span>
-            <h3 style="margin-bottom: 0.5rem;">🔗 友链申请</h3>
-            <p style="font-size: 0.75rem; color: #6c819e; margin-bottom: 1rem;">请输入您的网站地址</p>
+            <h3 style="margin-bottom: 8px; text-align:center;">🔗 友链申请</h3>
+            <p style="font-size: 12px; color: #6c819e; text-align:center; margin-bottom: 12px;">请输入您的网站地址</p>
             <div class="input-group">
                 <input type="url" id="friendSiteUrl" placeholder="https://你的网站.com" autocomplete="off">
             </div>
@@ -483,156 +509,98 @@
                 <button class="btn-confirm" id="confirmFriendBtn">提交申请</button>
                 <button class="btn-cancel" id="cancelFriendBtn">取消</button>
             </div>
-            <div id="friendMsg" style="font-size:0.7rem; margin-top: 12px; color:#2c8d9e;"></div>
+            <div id="friendMsg" style="font-size:11px; margin-top: 12px; text-align:center; color:#2c8d9e;"></div>
         </div>
     </div>
 </div>
 
 <script type="module">
-    // ==================== Supabase 配置 ====================
+    // Supabase 配置
     const SUPABASE_URL = 'https://ogldsgcwldzrjqbvqbft.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9nbGRzZ2N3bGR6cmpxYnZxYmZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2NTA4ODUsImV4cCI6MjA5MjIyNjg4NX0.8UiI78s-j7J4dXetBmDWs3u59rAp5ZJqLbk2J66xGyo';
     
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     
-    // 全局状态
-    let currentUser = null;          // 当前登录昵称
+    let currentUser = null;
     let currentLinks = [];
     
-    // ==================== 辅助函数 ====================
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-    function escapeAttr(str) {
-        return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-    }
+    // 辅助函数
+    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+    function escapeAttr(str) { return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;'); }
+    function isValidNickname(nick) { return /^[A-Za-z0-9]{2,20}$/.test(nick); }
+    function isValidPassword(pwd) { return /^[A-Za-z0-9]{4,20}$/.test(pwd); }
+    function hashPassword(pwd) { return btoa(unescape(encodeURIComponent(pwd + "xiaoqi_salt_2025"))); }
     
-    // 校验昵称: 英文+数字，长度2-20
-    function isValidNickname(nick) {
-        return /^[A-Za-z0-9]{2,20}$/.test(nick);
-    }
-    // 校验密码: 英文+数字，长度4-20
-    function isValidPassword(pwd) {
-        return /^[A-Za-z0-9]{4,20}$/.test(pwd);
-    }
-    
-    // ==================== 数据库操作 (user_links 表，username 字段存储昵称) ====================
+    // 数据库操作
     async function loadUserLinks() {
         if (!currentUser) return [];
-        const { data, error } = await supabase
-            .from('user_links')
-            .select('*')
-            .eq('username', currentUser)
-            .order('id', { ascending: true });
-        if (error) {
-            console.error('加载链接失败:', error);
-            return [];
-        }
-        return data.map(item => ({
-            id: item.id,
-            name: item.link_name,
-            url: item.link_url,
-            icon: item.link_icon || '🔗',
-            clicks: item.click_count || 0
-        }));
+        const { data, error } = await supabase.from('user_links').select('*').eq('username', currentUser).order('id', { ascending: true });
+        if (error) return [];
+        return data.map(item => ({ id: item.id, name: item.link_name, url: item.link_url, icon: item.link_icon || '🔗', clicks: item.click_count || 0 }));
     }
-    
     async function addLinkToDB(name, url, icon = '🔗') {
         if (!currentUser) return null;
-        const { data, error } = await supabase
-            .from('user_links')
-            .insert({
-                username: currentUser,
-                link_name: name,
-                link_url: url,
-                link_icon: icon,
-                click_count: 0
-            })
-            .select();
-        if (error) {
-            console.error('添加失败:', error);
-            return null;
-        }
-        return data?.[0] || null;
+        const { data, error } = await supabase.from('user_links').insert({ username: currentUser, link_name: name, link_url: url, link_icon: icon, click_count: 0 }).select();
+        return error ? null : data?.[0] || null;
     }
-    
     async function updateLinkInDB(id, updates) {
         if (!currentUser) return false;
-        const { error } = await supabase
-            .from('user_links')
-            .update({
-                link_name: updates.name,
-                link_url: updates.url,
-                link_icon: updates.icon,
-                click_count: updates.clicks
-            })
-            .eq('id', id)
-            .eq('username', currentUser);
-        if (error) {
-            console.error('更新失败:', error);
-            return false;
-        }
-        return true;
+        const { error } = await supabase.from('user_links').update({ link_name: updates.name, link_url: updates.url, link_icon: updates.icon, click_count: updates.clicks }).eq('id', id).eq('username', currentUser);
+        return !error;
     }
-    
     async function deleteLinkFromDB(id) {
         if (!currentUser) return false;
-        const { error } = await supabase
-            .from('user_links')
-            .delete()
-            .eq('id', id)
-            .eq('username', currentUser);
-        if (error) {
-            console.error('删除失败:', error);
-            return false;
-        }
-        return true;
+        const { error } = await supabase.from('user_links').delete().eq('id', id).eq('username', currentUser);
+        return !error;
     }
-    
     async function incrementClickInDB(id, currentClicks) {
         if (!currentUser) return;
-        await supabase
-            .from('user_links')
-            .update({ click_count: currentClicks + 1 })
-            .eq('id', id)
-            .eq('username', currentUser);
+        await supabase.from('user_links').update({ click_count: currentClicks + 1 }).eq('id', id).eq('username', currentUser);
+    }
+    async function refreshLinksAndRender() { currentLinks = await loadUserLinks(); renderCustomLinks(); }
+    
+    // 用户认证 (profiles 表)
+    async function signUp(nickname, password) {
+        if (!isValidNickname(nickname)) return { ok: false, msg: "昵称需为英文+数字，2-20位" };
+        if (!isValidPassword(password)) return { ok: false, msg: "密码需为英文+数字，4-20位" };
+        const { data: existing } = await supabase.from('profiles').select('nickname').eq('nickname', nickname).maybeSingle();
+        if (existing) return { ok: false, msg: "昵称已被注册" };
+        const { error } = await supabase.from('profiles').insert({ nickname, password_hash: hashPassword(password) });
+        if (error) return { ok: false, msg: "注册失败，请确保已创建 profiles 表" };
+        return { ok: true };
+    }
+    async function signIn(nickname, password) {
+        if (!isValidNickname(nickname)) return { ok: false, msg: "昵称格式错误" };
+        const { data, error } = await supabase.from('profiles').select('nickname, password_hash').eq('nickname', nickname).maybeSingle();
+        if (error || !data) return { ok: false, msg: "用户不存在" };
+        if (data.password_hash !== hashPassword(password)) return { ok: false, msg: "密码错误" };
+        return { ok: true, nickname: data.nickname };
+    }
+    function signOut() { currentUser = null; currentLinks = []; updateUserUI(); renderCustomLinks(); localStorage.removeItem("xiaoqi_session"); }
+    function saveSession(nickname) { localStorage.setItem("xiaoqi_session", nickname); }
+    async function initSession() {
+        const saved = localStorage.getItem("xiaoqi_session");
+        if (saved) {
+            const { data } = await supabase.from('profiles').select('nickname').eq('nickname', saved).maybeSingle();
+            if (data) { currentUser = saved; currentLinks = await loadUserLinks(); }
+        }
+        updateUserUI(); renderCustomLinks();
     }
     
-    async function refreshLinksAndRender() {
-        currentLinks = await loadUserLinks();
-        renderCustomLinks();
-    }
-    
-    // ==================== 自定义链接渲染 ====================
     function renderCustomLinks() {
         const container = document.getElementById("customLinksList");
         if (!container) return;
-        if (!currentUser) {
-            container.innerHTML = `<div style="padding:1rem; text-align:center; color:#8aa0bc;">🔐 登录后即可同步自定义链接到云端</div>`;
-            return;
-        }
-        if (currentLinks.length === 0) {
-            container.innerHTML = `<div style="padding:1rem; text-align:center;">✨ 暂无链接，点击上方添加</div>`;
-            return;
-        }
+        if (!currentUser) { container.innerHTML = `<div style="padding:16px; text-align:center; color:#8aa0bc;">🔐 登录后即可同步自定义链接到云端</div>`; return; }
+        if (currentLinks.length === 0) { container.innerHTML = `<div style="padding:16px; text-align:center;">✨ 暂无链接，点击上方添加</div>`; return; }
         container.innerHTML = "";
         currentLinks.forEach(link => {
-            const row = document.createElement("div");
-            row.className = "link-row";
+            const row = document.createElement("div"); row.className = "link-row";
             row.innerHTML = `
                 <div class="link-info" data-url="${escapeAttr(link.url)}" data-id="${link.id}" style="flex:1;">
                     <div class="link-icon">${link.icon || '🔗'}</div>
-                    <div>
-                        <div class="link-name">${escapeHtml(link.name)}</div>
-                        <span class="click-count">📊 ${link.clicks} 次</span>
-                    </div>
+                    <div class="link-name">${escapeHtml(link.name)}</div>
+                    <span class="click-count">📊 ${link.clicks} 次</span>
                 </div>
                 <div class="link-actions">
                     <button class="icon-btn edit-link" data-id="${link.id}" title="编辑">✏️</button>
@@ -640,85 +608,29 @@
                 </div>
             `;
             const infoDiv = row.querySelector(".link-info");
-            infoDiv.addEventListener("click", async (e) => {
-                if (e.target.closest('.icon-btn')) return;
-                await incrementClickInDB(link.id, link.clicks);
-                link.clicks += 1;
-                renderCustomLinks();
-                window.open(link.url, '_blank');
-            });
+            infoDiv.addEventListener("click", async (e) => { if (e.target.closest('.icon-btn')) return; await incrementClickInDB(link.id, link.clicks); link.clicks += 1; renderCustomLinks(); window.open(link.url, '_blank'); });
             container.appendChild(row);
         });
-        
-        document.querySelectorAll('.edit-link').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                const id = parseInt(btn.dataset.id);
-                const link = currentLinks.find(l => l.id === id);
-                if (!link) return;
-                const newName = prompt("编辑名称", link.name);
-                if (!newName) return;
-                let newUrl = prompt("网址", link.url);
-                if (!newUrl) return;
-                if (!newUrl.startsWith('http')) newUrl = 'https://' + newUrl;
-                const newIcon = prompt("图标(emoji)", link.icon || "🔗");
-                const success = await updateLinkInDB(id, {
-                    name: newName.trim(),
-                    url: newUrl,
-                    icon: newIcon || "🔗",
-                    clicks: link.clicks
-                });
-                if (success) await refreshLinksAndRender();
-            });
-        });
-        
-        document.querySelectorAll('.delete-link').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                const id = parseInt(btn.dataset.id);
-                if (confirm("删除此链接？")) {
-                    await deleteLinkFromDB(id);
-                    await refreshLinksAndRender();
-                }
-            });
-        });
-        
-        if (window.currentSearchKeyword) {
-            highlightContainer(container, window.currentSearchKeyword);
-        }
+        document.querySelectorAll('.edit-link').forEach(btn => btn.addEventListener('click', async (e) => { e.stopPropagation(); const id = parseInt(btn.dataset.id); const link = currentLinks.find(l => l.id === id); if(!link) return; const newName = prompt("编辑名称", link.name); if(!newName) return; let newUrl = prompt("网址", link.url); if(!newUrl) return; if(!newUrl.startsWith('http')) newUrl = 'https://' + newUrl; const newIcon = prompt("图标(emoji)", link.icon || "🔗"); if(await updateLinkInDB(id, { name: newName.trim(), url: newUrl, icon: newIcon || "🔗", clicks: link.clicks })) await refreshLinksAndRender(); }));
+        document.querySelectorAll('.delete-link').forEach(btn => btn.addEventListener('click', async (e) => { e.stopPropagation(); const id = parseInt(btn.dataset.id); if(confirm("删除此链接？")) { await deleteLinkFromDB(id); await refreshLinksAndRender(); } }));
+        if (window.currentSearchKeyword) highlightContainer(container, window.currentSearchKeyword);
     }
     
     async function addNewLink(name, url, icon = "📎") {
-        if (!currentUser) {
-            alert("请先登录后再添加链接，登录后数据会永久云端保存");
-            return false;
-        }
+        if (!currentUser) { alert("请先登录后再添加链接"); return false; }
         if (!name || !url) return false;
         if (!url.startsWith('http')) url = 'https://' + url;
         const newRecord = await addLinkToDB(name.substring(0,30), url, icon);
-        if (newRecord) {
-            await refreshLinksAndRender();
-            return true;
-        }
+        if (newRecord) { await refreshLinksAndRender(); return true; }
         return false;
     }
     
-    // ==================== 固定办公套件 ====================
+    // 固定办公套件
     const DEFAULT_CLICKS_KEY = "xiaoqi_default_clicks_v2";
-    function loadDefaultClicks() {
-        const stored = localStorage.getItem(DEFAULT_CLICKS_KEY);
-        if (stored) { try { return JSON.parse(stored); } catch(e) { return {}; } }
-        return {};
-    }
+    function loadDefaultClicks() { const stored = localStorage.getItem(DEFAULT_CLICKS_KEY); return stored ? JSON.parse(stored) : {}; }
     function saveDefaultClicks(map) { localStorage.setItem(DEFAULT_CLICKS_KEY, JSON.stringify(map)); }
     function getDefaultClickCount(url) { return loadDefaultClicks()[url] || 0; }
-    function incrementDefaultClick(url) {
-        const map = loadDefaultClicks();
-        map[url] = (map[url] || 0) + 1;
-        saveDefaultClicks(map);
-        renderDefaultLinks();
-    }
-    
+    function incrementDefaultClick(url) { const map = loadDefaultClicks(); map[url] = (map[url] || 0) + 1; saveDefaultClicks(map); renderDefaultLinks(); }
     const defaultOffice = [
         { name: "小七便签", url: "https://yanqi-spec.github.io/-/", icon: "📝" },
         { name: "秘塔搜索AI", url: "https://metaso.cn/", icon: "🤖" },
@@ -729,322 +641,67 @@
         { name: "在线PS (备用)", url: "https://ps.gaoding.com/#/", icon: "🎨" },
         { name: "无水印解析", url: "https://pv.vlogdownloader.com/", icon: "⬇️" }
     ];
-    
     function renderDefaultLinks() {
-        const container = document.getElementById("defaultLinksList");
-        if (!container) return;
-        container.innerHTML = "";
+        const container = document.getElementById("defaultLinksList"); if (!container) return; container.innerHTML = "";
         defaultOffice.forEach(site => {
             const clickCount = getDefaultClickCount(site.url);
-            const div = document.createElement("div");
-            div.className = "link-row";
-            div.innerHTML = `
-                <div class="link-info" data-url="${escapeAttr(site.url)}" style="flex:1;">
-                    <div class="link-icon">${site.icon}</div>
-                    <div>
-                        <div class="link-name">${escapeHtml(site.name)}</div>
-                        <span class="click-count">点击 ${clickCount}</span>
-                    </div>
-                </div>
-            `;
-            const linkDiv = div.querySelector(".link-info");
-            linkDiv.addEventListener("click", (e) => {
-                e.preventDefault();
-                incrementDefaultClick(site.url);
-                window.open(site.url, '_blank');
-            });
+            const div = document.createElement("div"); div.className = "link-row";
+            div.innerHTML = `<div class="link-info" data-url="${escapeAttr(site.url)}" style="flex:1;"><div class="link-icon">${site.icon}</div><div class="link-name">${escapeHtml(site.name)}</div><span class="click-count">点击 ${clickCount}</span></div>`;
+            div.querySelector(".link-info").addEventListener("click", (e) => { e.preventDefault(); incrementDefaultClick(site.url); window.open(site.url, '_blank'); });
             container.appendChild(div);
         });
     }
     
-    // ==================== 页面搜索高亮 ====================
-    function highlightContainer(container, keyword) {
-        if (!keyword.trim()) return;
-        const regex = new RegExp(`(${escapeRegex(keyword)})`, 'gi');
-        const nameSpans = container.querySelectorAll('.link-name');
-        nameSpans.forEach(span => {
-            const originalText = span.innerText;
-            if (regex.test(originalText)) {
-                const newHtml = originalText.replace(regex, `<span class="search-highlight">$1</span>`);
-                span.innerHTML = newHtml;
-            } else {
-                span.innerHTML = originalText;
-            }
-        });
-    }
-    function clearAllHighlights() {
-        document.querySelectorAll('.link-name').forEach(span => { span.innerHTML = span.innerText; });
-    }
+    // 搜索高亮
+    function highlightContainer(container, keyword) { if (!keyword.trim()) return; const regex = new RegExp(`(${escapeRegex(keyword)})`, 'gi'); container.querySelectorAll('.link-name').forEach(span => { const txt = span.innerText; span.innerHTML = regex.test(txt) ? txt.replace(regex, `<span class="search-highlight">$1</span>`) : txt; }); }
+    function clearAllHighlights() { document.querySelectorAll('.link-name').forEach(span => span.innerHTML = span.innerText); }
     function escapeRegex(str) { return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
-    function performPageSearch() {
-        const keyword = document.getElementById("globalSearchInput").value.trim();
-        const clearBtn = document.getElementById("clearSearchBtn");
-        if (!keyword) {
-            clearAllHighlights();
-            window.currentSearchKeyword = null;
-            clearBtn.style.display = "none";
-            return;
-        }
-        window.currentSearchKeyword = keyword;
-        clearAllHighlights();
-        const left = document.getElementById("defaultLinksList");
-        const right = document.getElementById("customLinksList");
-        if (left) highlightContainer(left, keyword);
-        if (right && currentUser) highlightContainer(right, keyword);
-        clearBtn.style.display = "inline-flex";
-    }
-    function clearSearch() {
-        document.getElementById("globalSearchInput").value = "";
-        clearAllHighlights();
-        window.currentSearchKeyword = null;
-        document.getElementById("clearSearchBtn").style.display = "none";
-    }
+    function performPageSearch() { const kw = document.getElementById("globalSearchInput").value.trim(); const clearBtn = document.getElementById("clearSearchBtn"); if (!kw) { clearAllHighlights(); window.currentSearchKeyword = null; clearBtn.style.display = "none"; return; } window.currentSearchKeyword = kw; clearAllHighlights(); const left = document.getElementById("defaultLinksList"); const right = document.getElementById("customLinksList"); if (left) highlightContainer(left, kw); if (right && currentUser) highlightContainer(right, kw); clearBtn.style.display = "inline-flex"; }
+    function clearSearch() { document.getElementById("globalSearchInput").value = ""; clearAllHighlights(); window.currentSearchKeyword = null; document.getElementById("clearSearchBtn").style.display = "none"; }
     
-    // ==================== 下班倒计时 ====================
+    // 下班倒计时
     let offworkTargetHour = 18, offworkTargetMinute = 0;
-    function updateOffworkTimer() {
-        const now = new Date();
-        let target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), offworkTargetHour, offworkTargetMinute, 0);
-        const el = document.getElementById("offworkDisplay");
-        if (now >= target) {
-            el.innerText = "🎉 已下班！休息吧 🎉";
-        } else {
-            const diff = target - now;
-            const hours = Math.floor(diff / 3600000);
-            const mins = Math.floor((diff % 3600000) / 60000);
-            const secs = Math.floor((diff % 60000) / 1000);
-            el.innerText = `${hours.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-        }
-    }
-    function setOffworkFromInput() {
-        const val = document.getElementById("customOffworkTime").value;
-        const [hour, minute] = val.split(":").map(Number);
-        offworkTargetHour = hour;
-        offworkTargetMinute = minute;
-        updateOffworkTimer();
-        alert(`下班时间已设为 ${hour.toString().padStart(2,'0')}:${minute.toString().padStart(2,'0')}`);
-    }
+    function updateOffworkTimer() { const now = new Date(); const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), offworkTargetHour, offworkTargetMinute, 0); const el = document.getElementById("offworkDisplay"); if (now >= target) el.innerText = "🎉 已下班！"; else { const diff = target - now; el.innerText = `${Math.floor(diff/3600000).toString().padStart(2,'0')}:${Math.floor((diff%3600000)/60000).toString().padStart(2,'0')}:${Math.floor((diff%60000)/1000).toString().padStart(2,'0')}`; } }
+    function setOffworkFromInput() { const [h,m] = document.getElementById("customOffworkTime").value.split(":").map(Number); offworkTargetHour = h; offworkTargetMinute = m; updateOffworkTimer(); alert(`下班时间已设为 ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}`); }
     
-    // ==================== 自开发工具箱按钮 ====================
+    // 自开发按钮
     document.getElementById("xiaoqijizhangBtn").onclick = () => window.open("https://yanqi-spec.github.io/jizhang/", "_blank");
     document.getElementById("xiaoqibijianBtn").onclick = () => window.open("https://yanqi-spec.github.io/-/", "_blank");
     document.getElementById("saibodagongrenBtn").onclick = () => window.open("https://yanqi-spec.github.io/myns/", "_blank");
     document.getElementById("yanggeyangBtn").onclick = () => window.open("https://yanqi-spec.github.io/yanglegeyang/", "_blank");
+    document.getElementById("randomPwdBtn").onclick = () => { let pwd = Math.random().toString(36).slice(-10); navigator.clipboard.writeText(pwd); alert(`密码: ${pwd}`); };
+    document.getElementById("copyUrlBtn").onclick = () => { navigator.clipboard.writeText(window.location.href); alert("已复制地址"); };
     
-    // 友链申请弹窗
+    // 友链弹窗
     const friendModal = document.getElementById("friendLinkModal");
     function openFriendModal() { friendModal.style.display = "flex"; }
     function closeFriendModal() { friendModal.style.display = "none"; document.getElementById("friendSiteUrl").value = ""; document.getElementById("friendMsg").innerText = ""; }
     document.getElementById("friendLinkBtn").onclick = openFriendModal;
     document.getElementById("closeFriendModal").onclick = closeFriendModal;
     document.getElementById("cancelFriendBtn").onclick = closeFriendModal;
-    document.getElementById("confirmFriendBtn").onclick = () => {
-        const url = document.getElementById("friendSiteUrl").value.trim();
-        if (!url) {
-            document.getElementById("friendMsg").innerText = "请输入网站地址";
-            return;
-        }
-        if (!url.startsWith('http')) {
-            document.getElementById("friendMsg").innerText = "请输入完整网址 (以 http:// 或 https:// 开头)";
-            return;
-        }
-        document.getElementById("friendMsg").innerHTML = "✅ 申请已提交！我们会尽快审核。<br>感谢您的支持~";
-        document.getElementById("confirmFriendBtn").disabled = true;
-        setTimeout(() => {
-            closeFriendModal();
-            document.getElementById("confirmFriendBtn").disabled = false;
-        }, 1800);
-    };
+    document.getElementById("confirmFriendBtn").onclick = () => { const url = document.getElementById("friendSiteUrl").value.trim(); if (!url) { document.getElementById("friendMsg").innerText = "请输入网站地址"; return; } if (!url.startsWith('http')) { document.getElementById("friendMsg").innerText = "请输入完整网址"; return; } document.getElementById("friendMsg").innerHTML = "✅ 申请已提交！"; document.getElementById("confirmFriendBtn").disabled = true; setTimeout(() => { closeFriendModal(); document.getElementById("confirmFriendBtn").disabled = false; }, 1500); };
     
-    // ==================== 登录/注册 (基于 Supabase Auth 但使用自定义元数据存储昵称) ====================
-    // 注意：Supabase Auth 默认需要邮箱，我们通过自定义方式：将昵称作为 email 的本地部分 + 虚拟域名，实现昵称登录
-    // 但为了体验，我们使用自定义的 users 表来管理昵称+密码，避免邮箱困扰。
-    // 方案：创建独立的 users 表存储 (nickname, password_hash)，不使用 Supabase Auth，完全自主。
-    // 这样更符合“昵称+密码”的需求。
-    
-    // 创建 users 表 (SQL 请手动执行一次，这里在代码中动态检测)
-    // 首次使用时若表不存在会报错，需要先在 Supabase SQL Editor 执行：
-    /*
-    CREATE TABLE IF NOT EXISTS profiles (
-        nickname TEXT PRIMARY KEY,
-        password_hash TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT NOW()
-    );
-    */
-    // 我们已经在之前的步骤中创建了 user_links 表，现在需要 profiles 表来存储密码。
-    // 为了完整，这里提供自动检测，但建议手动执行。
-    
-    // 密码哈希函数 (简单哈希，仅供演示，生产环境建议 bcrypt)
-    function hashPassword(pwd) {
-        return btoa(unescape(encodeURIComponent(pwd + "xiaoqi_salt_2025")));
-    }
-    
-    // 注册: 检查昵称是否存在，插入 profiles 表
-    async function signUp(nickname, password) {
-        if (!isValidNickname(nickname)) return { ok: false, msg: "昵称需为英文+数字，2-20位" };
-        if (!isValidPassword(password)) return { ok: false, msg: "密码需为英文+数字，4-20位" };
-        // 检查昵称是否已存在
-        const { data: existing, error: checkErr } = await supabase
-            .from('profiles')
-            .select('nickname')
-            .eq('nickname', nickname)
-            .maybeSingle();
-        if (existing) return { ok: false, msg: "昵称已被注册" };
-        const { error } = await supabase
-            .from('profiles')
-            .insert({ nickname: nickname, password_hash: hashPassword(password) });
-        if (error) {
-            console.error(error);
-            return { ok: false, msg: "注册失败，请稍后重试" };
-        }
-        return { ok: true };
-    }
-    
-    // 登录: 验证昵称和密码
-    async function signIn(nickname, password) {
-        if (!isValidNickname(nickname)) return { ok: false, msg: "昵称格式错误" };
-        const { data, error } = await supabase
-            .from('profiles')
-            .select('nickname, password_hash')
-            .eq('nickname', nickname)
-            .maybeSingle();
-        if (error || !data) return { ok: false, msg: "用户不存在" };
-        if (data.password_hash !== hashPassword(password)) return { ok: false, msg: "密码错误" };
-        return { ok: true, nickname: data.nickname };
-    }
-    
-    // 登出
-    function signOut() {
-        currentUser = null;
-        currentLinks = [];
-        updateUserUI();
-        renderCustomLinks();
-        localStorage.removeItem("xiaoqi_session");
-    }
-    
-    // 保存会话
-    function saveSession(nickname) {
-        localStorage.setItem("xiaoqi_session", nickname);
-    }
-    
-    function loadSession() {
-        return localStorage.getItem("xiaoqi_session");
-    }
-    
-    function updateUserUI() {
-        const greet = document.getElementById("greetingText");
-        const btn = document.getElementById("authModalBtn");
-        if (currentUser) {
-            greet.innerText = `👤 ${currentUser}`;
-            btn.innerText = "退出";
-        } else {
-            greet.innerText = "👋 未登录";
-            btn.innerText = "登录";
-        }
-        renderCustomLinks();
-    }
-    
-    // 初始化会话
-    async function initSession() {
-        const saved = loadSession();
-        if (saved) {
-            // 验证该昵称是否还存在于 profiles 中（可选）
-            const { data } = await supabase.from('profiles').select('nickname').eq('nickname', saved).maybeSingle();
-            if (data) {
-                currentUser = saved;
-                currentLinks = await loadUserLinks();
-            } else {
-                localStorage.removeItem("xiaoqi_session");
-            }
-        }
-        updateUserUI();
-        renderCustomLinks();
-    }
-    
-    // 模态框逻辑
+    // 登录UI
+    function updateUserUI() { const greet = document.getElementById("greetingText"); const btn = document.getElementById("authModalBtn"); if (currentUser) { greet.innerText = `👤 ${currentUser}`; btn.innerText = "退出"; } else { greet.innerText = "👋 未登录"; btn.innerText = "登录"; } renderCustomLinks(); }
     const authModal = document.getElementById("authModal");
     function openAuthModal() { authModal.style.display = "flex"; }
     function closeAuthModal() { authModal.style.display = "none"; document.getElementById("loginErrorMsg").innerText = ""; document.getElementById("regErrorMsg").innerText = ""; }
-    document.getElementById("authModalBtn").onclick = () => {
-        if (currentUser) signOut();
-        else openAuthModal();
-    };
+    document.getElementById("authModalBtn").onclick = () => { if (currentUser) signOut(); else openAuthModal(); };
     document.getElementById("closeModalBtn").onclick = closeAuthModal;
-    document.getElementById("toRegisterBtn").onclick = () => {
-        document.getElementById("loginPanel").style.display = "none";
-        document.getElementById("registerPanel").style.display = "block";
-    };
-    document.getElementById("toLoginBtn").onclick = () => {
-        document.getElementById("loginPanel").style.display = "block";
-        document.getElementById("registerPanel").style.display = "none";
-    };
-    document.getElementById("doLoginBtn").onclick = async () => {
-        const nick = document.getElementById("loginUsername").value.trim();
-        const pwd = document.getElementById("loginPassword").value;
-        const res = await signIn(nick, pwd);
-        if (res.ok) {
-            currentUser = nick;
-            saveSession(nick);
-            currentLinks = await loadUserLinks();
-            closeAuthModal();
-            document.getElementById("loginUsername").value = "";
-            document.getElementById("loginPassword").value = "";
-            updateUserUI();
-            renderCustomLinks();
-        } else {
-            document.getElementById("loginErrorMsg").innerText = res.msg;
-        }
-    };
-    document.getElementById("doRegisterBtn").onclick = async () => {
-        const nick = document.getElementById("regUser").value.trim();
-        const pwd = document.getElementById("regPass").value;
-        const confirm = document.getElementById("regConfirm").value;
-        if (pwd !== confirm) {
-            document.getElementById("regErrorMsg").innerText = "两次密码不一致";
-            return;
-        }
-        const res = await signUp(nick, pwd);
-        if (res.ok) {
-            alert("注册成功！请登录");
-            document.getElementById("loginPanel").style.display = "block";
-            document.getElementById("registerPanel").style.display = "none";
-            document.getElementById("regUser").value = "";
-            document.getElementById("regPass").value = "";
-            document.getElementById("regConfirm").value = "";
-            document.getElementById("regErrorMsg").innerText = "";
-        } else {
-            document.getElementById("regErrorMsg").innerText = res.msg;
-        }
-    };
+    document.getElementById("toRegisterBtn").onclick = () => { document.getElementById("loginPanel").style.display = "none"; document.getElementById("registerPanel").style.display = "block"; };
+    document.getElementById("toLoginBtn").onclick = () => { document.getElementById("loginPanel").style.display = "block"; document.getElementById("registerPanel").style.display = "none"; };
+    document.getElementById("doLoginBtn").onclick = async () => { const nick = document.getElementById("loginUsername").value.trim(); const pwd = document.getElementById("loginPassword").value; const res = await signIn(nick, pwd); if (res.ok) { currentUser = nick; saveSession(nick); currentLinks = await loadUserLinks(); closeAuthModal(); document.getElementById("loginUsername").value = ""; document.getElementById("loginPassword").value = ""; updateUserUI(); renderCustomLinks(); } else { document.getElementById("loginErrorMsg").innerText = res.msg; } };
+    document.getElementById("doRegisterBtn").onclick = async () => { const nick = document.getElementById("regUser").value.trim(); const pwd = document.getElementById("regPass").value; const confirm = document.getElementById("regConfirm").value; if (pwd !== confirm) { document.getElementById("regErrorMsg").innerText = "两次密码不一致"; return; } const res = await signUp(nick, pwd); if (res.ok) { alert("注册成功！请登录"); document.getElementById("loginPanel").style.display = "block"; document.getElementById("registerPanel").style.display = "none"; document.getElementById("regUser").value = ""; document.getElementById("regPass").value = ""; document.getElementById("regConfirm").value = ""; document.getElementById("regErrorMsg").innerText = ""; } else { document.getElementById("regErrorMsg").innerText = res.msg; } };
     window.onclick = (e) => { if (e.target === authModal) closeAuthModal(); if (e.target === friendModal) closeFriendModal(); };
     
-    // 其他按钮
-    document.getElementById("randomPwdBtn").onclick = () => {
-        let pwd = Math.random().toString(36).slice(-10) + Math.random().toString(36).slice(-4);
-        navigator.clipboard.writeText(pwd);
-        alert(`随机密码已复制: ${pwd}`);
-    };
-    document.getElementById("copyUrlBtn").onclick = () => { navigator.clipboard.writeText(window.location.href); alert("已复制当前页面地址"); };
+    // 其他绑定
     document.getElementById("globalSearchBtn").onclick = performPageSearch;
     document.getElementById("clearSearchBtn").onclick = clearSearch;
     document.getElementById("globalSearchInput").addEventListener("keypress", (e) => { if(e.key === 'Enter') performPageSearch(); });
-    document.getElementById("addCustomBtn").onclick = () => {
-        if (!currentUser) { alert("请先登录后再添加自定义链接"); return; }
-        let n = prompt("链接名称"); if(n){ let u = prompt("网址"); if(u) addNewLink(n,u); }
-    };
-    document.getElementById("quickAddLinkBtn").onclick = () => {
-        if (!currentUser) { alert("请先登录后再添加"); return; }
-        let name = document.getElementById("newLinkName").value.trim();
-        let url = document.getElementById("newLinkUrl").value.trim();
-        if(name && url) {
-            addNewLink(name, url);
-            document.getElementById("newLinkName").value = "";
-            document.getElementById("newLinkUrl").value = "";
-        } else alert("请填写完整");
-    };
+    document.getElementById("addCustomBtn").onclick = () => { if (!currentUser) { alert("请先登录"); return; } let n = prompt("名称"); if(n){ let u = prompt("网址"); if(u) addNewLink(n,u); } };
+    document.getElementById("quickAddLinkBtn").onclick = () => { if (!currentUser) { alert("请先登录"); return; } let name = document.getElementById("newLinkName").value.trim(); let url = document.getElementById("newLinkUrl").value.trim(); if(name && url) { addNewLink(name, url); document.getElementById("newLinkName").value = ""; document.getElementById("newLinkUrl").value = ""; } else alert("填写完整"); };
     document.getElementById("setOffworkBtn").onclick = setOffworkFromInput;
     
-    // 启动
     renderDefaultLinks();
     updateOffworkTimer();
     setInterval(updateOffworkTimer, 1000);
